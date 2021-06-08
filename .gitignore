@@ -1,2 +1,5 @@
 *.o
 dwm
+*.diff
+dwmswallow
+*.orig
