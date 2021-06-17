@@ -37,9 +37,14 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class                        instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",                       NULL,       NULL,       0,            0,           -1 },
+	{ "Org.gnome.Nautilus",         NULL,       NULL,       1 << 2,       0,           -1 },
+	{ "Gimp",                       NULL,       NULL,       1 << 3,       1,           -1 },
+	{ "Inkscape",                   NULL,       NULL,       1 << 3,       1,           -1 },
     { "Google-chrome-unstable",     NULL,       NULL,       1 << 8,       0,           -1 },
 	{ "firefox",                    NULL,       NULL,       1 << 8,       0,           -1 },
+	{ "Slack",                      NULL,       NULL,       1 << 7,       0,           -1 },
+	{ "discord",                    NULL,       NULL,       1 << 7,       0,           -1 },
+	{ "Zoom",                       NULL,       NULL,       1 << 7,       0,           -1 },
 };
 
 /* window swallowing */
@@ -48,7 +53,7 @@ static const int swalretroactive = 1;
 static const char swalsymbol[] = "≮/≯";
 
 /* layout(s) */
-static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.60; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 
@@ -65,7 +70,7 @@ static const Layout layouts[] = {
 };
 
 /* key definitions */
-#define MODKEY Mod1Mask
+#define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -79,11 +84,13 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
+static const char *lockcmd[]  = { "slock", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY,                       XK_l,      spawn,          {.v = lockcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -94,7 +101,7 @@ static Key keys[] = {
 	/* { MODKEY,                       XK_i,      incnmaster,     {.i = +1 } }, */
 	/* { MODKEY,                       XK_d,      incnmaster,     {.i = -1 } }, */
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
+	/* { MODKEY,                       XK_l,      setmfact,       {.f = +0.05} }, */
 	{ MODKEY,                       XK_space,  zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_q,      killclient,     {0} },
