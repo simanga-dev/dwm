@@ -36,15 +36,15 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class                        instance    title       tags mask     isfloating   monitor */
-	{ "Org.gnome.Nautilus",         NULL,       NULL,       1 << 2,       0,           -1 },
-	{ "Gimp",                       NULL,       NULL,       1 << 3,       1,           -1 },
-	{ "Inkscape",                   NULL,       NULL,       1 << 3,       1,           -1 },
-    { "Google-chrome-unstable",     NULL,       NULL,       1 << 8,       0,           -1 },
-	{ "firefox",                    NULL,       NULL,       1 << 8,       0,           -1 },
-	{ "Slack",                      NULL,       NULL,       1 << 7,       0,           -1 },
-	{ "discord",                    NULL,       NULL,       1 << 7,       0,           -1 },
-	{ "Zoom",                       NULL,       NULL,       1 << 7,       0,           -1 },
+	/* class                        instance    title       tags mask      iscentered  isfloating   monitor */
+	{ "Org.gnome.Nautilus",         NULL,       NULL,       1 << 2,        0,          0,           -1 },
+	{ "Gimp",                       NULL,       NULL,       1 << 3,        0,          1,           -1 },
+	{ "Inkscape",                   NULL,       NULL,       1 << 3,        0,          0,           -1 },
+    { "Google-chrome-unstable",     NULL,       NULL,       1 << 8,        0,          0,           -1 },
+	{ "firefox",                    NULL,       NULL,       1 << 8,        0,          0,           -1 },
+	{ "Slack",                      NULL,       NULL,       1 << 7,        0,          0,           -1 },
+	{ "discord",                    NULL,       NULL,       1 << 7,        0,          0,           -1 },
+	{ "Zoom",                       NULL,       NULL,       1 << 7,        0,          0,           -1 },
 };
 
 /* window swallowing */
@@ -105,7 +105,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_space,  zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_q,      killclient,     {0} },
-	{ MODKEY|ShiftMask,             XK_q,      killunsel,      {0} },
+	{ MODKEY,                       XK_w,      killunsel,      {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
@@ -122,7 +122,7 @@ static Key keys[] = {
 	/* { MODKEY,                       XK_period, focusmon,       {.i = +1 } }, */
 	/* { MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } }, */
 	/* { MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } }, */
-	{ MODKEY,                       XK_u,      swalstopsel,    {0} },
+	{ MODKEY,                       XK_s,      swalstopsel,    {0} },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
