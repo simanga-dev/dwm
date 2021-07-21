@@ -38,9 +38,10 @@ static const Rule rules[] = {
 	 */
 	/* class                        instance    title       tags mask      iscentered  isfloating   monitor */
 	{ "Org.gnome.Nautilus",         NULL,       NULL,       1 << 2,        0,          0,           -1 },
+	{ "Gnome-calculator",         	NULL,       NULL,            0,        0,          1,           -1 },
 	{ "Gimp",                       NULL,       NULL,       1 << 3,        0,          1,           -1 },
 	{ "Inkscape",                   NULL,       NULL,       1 << 3,        0,          0,           -1 },
-    { "Google-chrome-unstable",     NULL,       NULL,       1 << 8,        0,          0,           -1 },
+	{ "Google-chrome-unstable",     NULL,       NULL,       1 << 8,        0,          0,           -1 },
 	{ "firefox",                    NULL,       NULL,       1 << 8,        0,          0,           -1 },
 	{ "Slack",                      NULL,       NULL,       1 << 7,        0,          0,           -1 },
 	{ "discord",                    NULL,       NULL,       1 << 7,        0,          0,           -1 },
