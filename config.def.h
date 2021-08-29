@@ -13,7 +13,7 @@ static const int viewontag          = 1;     /* Switch view on tag switch */
 static const char *fonts[]          = { "Input Mono:size=10" };
 static const char dmenufont[]       = "Input Mono:size=10";
 static const char col_gray1[]       = "#080808";
-static const char col_gray2[]       = "#0c0c0c";
+static const char col_gray2[]       = "#080808";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#076678";
