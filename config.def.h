@@ -1,8 +1,6 @@
 /* See LICENSE file for copyright and license details. */
 
 #include <X11/XF86keysym.h>
-#include "horizgrid.c"
-#include "fibonacci.c"
 
 /* appearance */
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
@@ -10,6 +8,7 @@ static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int viewontag          = 1;     /* Switch view on tag switch */
+static const int lockfullscreen     = 0; /* 1 will force focus on the fullscreen window */
 static const char *fonts[]          = { "Input Mono:size=10" };
 static const char dmenufont[]       = "Input Mono:size=10";
 static const char col_gray1[]       = "#080808";
@@ -43,6 +42,7 @@ static const Rule rules[] = {
 	{ "Inkscape",                   NULL,       NULL,       1 << 3,        0,          1,          0,           -1 },
 	{ "Google-chrome-unstable",     NULL,       NULL,       1 << 8,        0,          0,          0,           -1 },
 	{ "firefox",                    NULL,       NULL,       1 << 8,        0,          1,          0,           -1 },
+	{ "Microsoft-edge-dev",        NULL,       NULL,       1 << 8,        0,          1,          0,           -1 },
 	{ "Slack",                      NULL,       NULL,       1 << 7,        0,          1,          0,           -1 },
 	{ "discord",                    NULL,       NULL,       1 << 7,        0,          0,          0,           -1 },
 	{ "Zoom",                       NULL,       NULL,       1 << 7,        0,          0,          0,           -1 },
@@ -65,11 +65,9 @@ static const Layout layouts[] = {
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
-	{ "###",      horizgrid },
+	{ "###",      grid },
 	{ "TTT",      bstack },
 	{ "===",      bstackhoriz },
- 	{ "[@]",      spiral },
- 	{ "[\\]",     dwindle },
 };
 
 /* key definitions */
@@ -117,8 +115,6 @@ static Key keys[] = {
 	{ MODKEY,                       XK_g,      setlayout,      {.v = &layouts[3]} },
 	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[4]} },
 	{ MODKEY|ShiftMask,             XK_u,      setlayout,      {.v = &layouts[5]} },
-	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[6]} },
-	{ MODKEY|ShiftMask,             XK_r,      setlayout,      {.v = &layouts[7]} },
 	{ MODKEY|ShiftMask,             XK_space,  setlayout,      {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
