@@ -120,10 +120,9 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_space,      setlayout,      {0} },
 	{ MODKEY,                       XK_0,          view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,          tag,            {.ui = ~0 } },
-	/* { MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } }, */
-	/* { MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } }, */
-	{ MODKEY,                       XK_s,          focusmon,       {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_s,          focusmon,       {.i = +1 } },
+	{ MODKEY,                       XK_s,          togglesticky,   {0} },
+	/* { MODKEY,                       XK_s,          focusmon,       {.i = -1 } }, */
+	/* { MODKEY|ShiftMask,             XK_s,          focusmon,       {.i = +1 } }, */
 	{ MODKEY,                       XK_v,          winview,        {0} },
 	{ MODKEY,                       XK_a,          tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_a,          tagmon,         {.i = +1 } },
