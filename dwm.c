@@ -59,7 +59,7 @@
 
 /* enums */
 enum { CurNormal, CurResize, CurMove, CurSwal, CurLast }; /* cursor */
-enum { SchemeNorm, SchemeSel, SchemeTitle }; /* color schemes */
+enum { SchemeNorm, SchemeSel, SchemeTitle, SchemeUrg }; /* color schemes */
 enum { NetSupported, NetWMName, NetWMState, NetWMCheck,
        NetWMFullscreen, NetActiveWindow, NetWMWindowType,
        NetWMWindowTypeDialog, NetClientList, NetLast }; /* EWMH atoms */
@@ -2452,6 +2452,8 @@ togglesticky(const Arg *arg)
 	if (!selmon->sel)
 		return;
 	selmon->sel->issticky = !selmon->sel->issticky;
+    /* failed decimal */
+    /* selmon->sel->isurgent = !selmon->sel->isurgent; */
 	arrange(selmon);
 }
 
@@ -2809,8 +2811,11 @@ updatewmhints(Client *c)
 		if (c == selmon->sel && wmh->flags & XUrgencyHint) {
 			wmh->flags &= ~XUrgencyHint;
 			XSetWMHints(dpy, c->win, wmh);
-		} else
+		} else {
 			c->isurgent = (wmh->flags & XUrgencyHint) ? 1 : 0;
+			if (c->isurgent)
+				XSetWindowBorder(dpy, c->win, scheme[SchemeUrg][ColBorder].pixel);
+		}
 		if (wmh->flags & InputHint)
 			c->neverfocus = !wmh->input;
 		else

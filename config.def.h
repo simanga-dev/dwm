@@ -13,14 +13,16 @@ static const char *fonts[]          = { "JetBrainsMono-Regular:size=10" };
 static const char dmenufont[]       = "JetBrainsMono-Regular:size=10";
 static const char col_gray1[]       = "#080808";
 static const char col_gray2[]       = "#080808";
-static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#076678";
+static const char col_gray3[]       = "#a9b1d6";
+static const char col_gray4[]       = "#c0caf5";
+static const char col_cyan[]        = "#164846";
+static const char col_urgborder[]   = "#ff9e64";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
 	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
 	[SchemeTitle]  = { col_gray4, col_gray1,  col_cyan  },
+	[SchemeUrg]  = { col_gray4, col_cyan,  col_urgborder  },
 };
 
 /* tagging */
