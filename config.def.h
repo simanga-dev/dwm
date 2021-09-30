@@ -44,9 +44,8 @@ static const Rule rules[] = {
 	{ "Gnome-calculator",         	NULL,       NULL,            0,        0,          0,          1,           -1 },
 	{ "Gimp",                       NULL,       NULL,       1 << 3,        0,          1,          1,           -1 },
 	{ "Inkscape",                   NULL,       NULL,       1 << 3,        0,          1,          0,           -1 },
-	{ "Google-chrome-unstable",     NULL,       NULL,       1 << 8,        0,          0,          0,           -1 },
 	{ "firefox",                    NULL,       NULL,       1 << 8,        0,          1,          0,           -1 },
-	{ "Microsoft-edge-dev",         NULL,       NULL,       1 << 8,        0,          1,          0,           -1 },
+	{ "Brave-browser-nightly",      NULL,       NULL,       1 << 8,        0,          1,          0,           -1 },
 	{ "Slack",                      NULL,       NULL,       1 << 7,        0,          1,          0,           -1 },
 	{ "discord",                    NULL,       NULL,       1 << 7,        0,          0,          0,           -1 },
 	{ "Zoom",                       NULL,       NULL,       1 << 7,        0,          0,          0,           -1 },
@@ -99,8 +98,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_b,          togglebar,      {0} },
 	{ MODKEY,                       XK_j,          focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,          focusstack,     {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_h,          inplacerotate,  {.i = +1} },
-	{ MODKEY|ShiftMask,             XK_l,          inplacerotate,  {.i = -1} },
+	/* { MODKEY|ShiftMask,             XK_h,          inplacerotate,  {.i = +1} }, */
+	/* { MODKEY|ShiftMask,             XK_l,          inplacerotate,  {.i = -1} }, */
 	{ MODKEY|ShiftMask,             XK_j,          inplacerotate,  {.i = +2} },
 	{ MODKEY|ShiftMask,             XK_k,          inplacerotate,  {.i = -2} },
 	{ MODKEY,                       XK_y,          incnmaster,     {.i = +1 } },
@@ -133,8 +132,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_z,          swalstopsel,    {0} },
 	{ MODKEY,                       XK_Left,   viewtoleft,     {0} },
 	{ MODKEY,                       XK_Right,  viewtoright,    {0} },
-	{ MODKEY|ShiftMask,             XK_Left,   tagtoleft,      {0} },
-	{ MODKEY|ShiftMask,             XK_Right,  tagtoright,     {0} },
+	{ MODKEY|ShiftMask,             XK_h,   tagtoleft,      {0} },
+	{ MODKEY|ShiftMask,             XK_l,  tagtoright,     {0} },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -159,8 +158,8 @@ static Button buttons[] = {
 	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	/* { ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} }, */
-	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
-	{ ClkClientWin,         MODKEY,         Button2,        swalmouse,      {0} },
+	{ ClkClientWin,         MODKEY,         Button2,        resizemouse,    {0} },
+	{ ClkClientWin,         MODKEY,         Button3,        swalmouse,      {0} },
 	{ ClkTagBar,            0,              Button1,        view,           {0} },
 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
