@@ -11,11 +11,11 @@ static const int viewontag          = 1;     /* Switch view on tag switch */
 static const int lockfullscreen     = 0; /* 1 will force focus on the fullscreen window */
 static const char *fonts[]          = { "JetBrainsMono-Regular:size=10" };
 static const char dmenufont[]       = "JetBrainsMono-Regular:size=10";
-static const char col_gray1[]       = "#080808";
-static const char col_gray2[]       = "#080808";
+static const char col_gray1[]       = "#121212";
+static const char col_gray2[]       = "#121212";
 static const char col_gray3[]       = "#a9b1d6";
 static const char col_gray4[]       = "#c0caf5";
-static const char col_cyan[]        = "#164846";
+static const char col_cyan[]        = "#2e4274"; // static const char col_cyan[]        = "#164846";
 static const char col_urgborder[]   = "#ff9e64";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
@@ -45,7 +45,10 @@ static const Rule rules[] = {
 	{ "Gimp",                       NULL,       NULL,       1 << 3,        0,          1,          1,           -1 },
 	{ "Inkscape",                   NULL,       NULL,       1 << 3,        0,          1,          0,           -1 },
 	{ "firefox",                    NULL,       NULL,       1 << 8,        0,          1,          0,           -1 },
+	{ "brave-browser-nightly",      NULL,       NULL,       1 << 8,        0,          1,          0,           -1 },
 	{ "Brave-browser-nightly",      NULL,       NULL,       1 << 8,        0,          1,          0,           -1 },
+	{ "Microsoft-edge-beta",      NULL,       NULL,       1 << 7,        0,          1,          0,           -1 },
+	{ "microsoft-edge-beta",      NULL,       NULL,       1 << 7,        0,          1,          0,           -1 },
 	{ "Slack",                      NULL,       NULL,       1 << 7,        0,          1,          0,           -1 },
 	{ "discord",                    NULL,       NULL,       1 << 7,        0,          0,          0,           -1 },
 	{ "Zoom",                       NULL,       NULL,       1 << 7,        0,          0,          0,           -1 },
@@ -132,8 +135,11 @@ static Key keys[] = {
 	{ MODKEY,                       XK_z,          swalstopsel,    {0} },
 	{ MODKEY,                       XK_Left,   viewtoleft,     {0} },
 	{ MODKEY,                       XK_Right,  viewtoright,    {0} },
-	{ MODKEY|ShiftMask,             XK_h,   tagtoleft,      {0} },
-	{ MODKEY|ShiftMask,             XK_l,  tagtoright,     {0} },
+	// { MODKEY|ShiftMask,             XK_h,   tagtoleft,      {0} },
+	// { MODKEY|ShiftMask,             XK_l,  tagtoright,     {0} },
+	{ MODKEY|ShiftMask,             XK_s, scratchpad_show, {0} },
+	{ MODKEY|ShiftMask,             XK_h, scratchpad_hide, {0} },
+	{ MODKEY|ShiftMask,             XK_r,scratchpad_remove,{0} },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)

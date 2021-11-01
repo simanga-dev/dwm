@@ -217,6 +217,7 @@ static void monocle(Monitor *m);
 static void motionnotify(XEvent *e);
 static void movemouse(const Arg *arg);
 static Client *nexttiled(Client *c);
+static void pop(Client *);
 static void propertynotify(XEvent *e);
 static void quit(const Arg *arg);
 static Monitor *recttomon(int x, int y, int w, int h);
@@ -226,6 +227,12 @@ static void resizemouse(const Arg *arg);
 static void restack(Monitor *m);
 static void run(void);
 static void scan(void);
+static void scratchpad_hide ();
+static _Bool scratchpad_last_showed_is_killed (void);
+static void scratchpad_remove ();
+static void scratchpad_show ();
+static void scratchpad_show_client (Client * c);
+static void scratchpad_show_first (void);
 static int sendevent(Client *c, Atom proto);
 static void sendmon(Client *c, Monitor *m);
 static void setclientstate(Client *c, long state);
@@ -289,7 +296,7 @@ static void grid(Monitor *m);
 static void shiftview(const Arg *arg);
 
 /* variables */
-static Client *prevzoom = NULL;
+// static Client *prevzoom = NULL;
 static const char broken[] = "broken";
 static char stext[256];
 static int screen;
@@ -324,6 +331,10 @@ static Monitor *mons, *selmon;
 static Swallow *swallows;
 static Window root, wmcheckwin;
 
+/* scratchpad */
+# define SCRATCHPAD_MASK (1u << sizeof tags / sizeof * tags)
+static Client * scratchpad_last_showed = NULL;
+
 /* configuration, allows nested code to access above variables */
 #include "config.h"
 
@@ -337,7 +348,8 @@ struct Pertag {
 };
 
 /* compile-time check if all tags fit into an unsigned int bit array. */
-struct NumTags { char limitexceeded[LENGTH(tags) > 31 ? -1 : 1]; };
+// struct NumTags { char limitexceeded[LENGTH(tags) > 31 ? -1 : 1]; };
+struct NumTags { char limitexceeded[LENGTH(tags) > 30 ? -1 : 1]; };
 
 /* function implementations */
 void
@@ -380,7 +392,9 @@ applyrules(Client *c)
 		XFree(ch.res_class);
 	if (ch.res_name)
 		XFree(ch.res_name);
-	c->tags = c->tags & TAGMASK ? c->tags & TAGMASK : c->mon->tagset[c->mon->seltags];
+	// c->tags = c->tags & TAGMASK ? c->tags & TAGMASK : c->mon->tagset[c->mon->seltags];
+	if (c->tags != SCRATCHPAD_MASK)
+		c->tags = c->tags & TAGMASK ? c->tags & TAGMASK : c->mon->tagset[c->mon->seltags];
 }
 
 int
@@ -919,14 +933,13 @@ expose(XEvent *e)
 		drawbar(m);
 }
 
-Client *
-findbefore(Client *c)
+void
+pop(Client *c)
 {
-	Client *tmp;
-	if (c == selmon->clients)
-		return NULL;
-	for (tmp = selmon->clients; tmp && tmp->next != c; tmp = tmp->next);
-	return tmp;
+	detach(c);
+	attach(c);
+	focus(c);
+	arrange(c->mon);
 }
 
 
@@ -1784,6 +1797,99 @@ scan(void)
 	}
 }
 
+static void scratchpad_hide ()
+{
+	if (selmon -> sel)
+	{
+		selmon -> sel -> tags = SCRATCHPAD_MASK;
+		selmon -> sel -> isfloating = 1;
+		focus(NULL);
+		arrange(selmon);
+	}
+}
+
+static _Bool scratchpad_last_showed_is_killed (void)
+{
+	_Bool killed = 1;
+	for (Client * c = selmon -> clients; c != NULL; c = c -> next)
+	{
+		if (c == scratchpad_last_showed)
+		{
+			killed = 0;
+			break;
+		}
+	}
+	return killed;
+}
+
+static void scratchpad_remove ()
+{
+	if (selmon -> sel && scratchpad_last_showed != NULL && selmon -> sel == scratchpad_last_showed)
+		scratchpad_last_showed = NULL;
+}
+
+static void scratchpad_show ()
+{
+	if (scratchpad_last_showed == NULL || scratchpad_last_showed_is_killed ())
+		scratchpad_show_first ();
+	else
+	{
+		if (scratchpad_last_showed -> tags != SCRATCHPAD_MASK)
+		{
+			scratchpad_last_showed -> tags = SCRATCHPAD_MASK;
+			focus(NULL);
+			arrange(selmon);
+		}
+		else
+		{
+			_Bool found_current = 0;
+			_Bool found_next = 0;
+			for (Client * c = selmon -> clients; c != NULL; c = c -> next)
+			{
+				if (found_current == 0)
+				{
+					if (c == scratchpad_last_showed)
+					{
+						found_current = 1;
+						continue;
+					}
+				}
+				else
+				{
+					if (c -> tags == SCRATCHPAD_MASK)
+					{
+						found_next = 1;
+						scratchpad_show_client (c);
+						break;
+					}
+				}
+			}
+			if (found_next == 0) scratchpad_show_first ();
+		}
+	}
+}
+
+static void scratchpad_show_client (Client * c)
+{
+	scratchpad_last_showed = c;
+	c -> tags = selmon->tagset[selmon->seltags];
+	focus(c);
+	arrange(selmon);
+}
+
+static void scratchpad_show_first (void)
+{
+	for (Client * c = selmon -> clients; c != NULL; c = c -> next)
+	{
+		if (c -> tags == SCRATCHPAD_MASK)
+		{
+			scratchpad_show_client (c);
+			break;
+		}
+	}
+}
+
+
 void
 sendmon(Client *c, Monitor *m)
 {
@@ -2546,6 +2652,8 @@ unmanage(Client *c, int destroyed)
 		XSetErrorHandler(xerror);
 		XUngrabServer(dpy);
 	}
+	if (scratchpad_last_showed == c)
+		scratchpad_last_showed = NULL;
 	free(c);
 	focus(NULL);
 	updateclientlist();
@@ -3017,42 +3125,46 @@ void
 zoom(const Arg *arg)
 {
 	Client *c = selmon->sel;
-	Client *at = NULL, *cold, *cprevious = NULL;
+	// Client *at = NULL, *cold, *cprevious = NULL;
 
 	if (!selmon->lt[selmon->sellt]->arrange
 	|| (selmon->sel && selmon->sel->isfloating))
 		return;
-	if (c == nexttiled(selmon->clients)) {
-		at = findbefore(prevzoom);
-		if (at)
-			cprevious = nexttiled(at->next);
-		if (!cprevious || cprevious != prevzoom) {
-			prevzoom = NULL;
-			if (!c || !(c = nexttiled(c->next)))
-				return;
-		} else
-			c = cprevious;
-	}
-	cold = nexttiled(selmon->clients);
-	if (c != cold && !at)
-		at = findbefore(c);
-	detach(c);
-	attach(c);
-	/* swap windows instead of pushing the previous one down */
-	if (c != cold && at) {
-		prevzoom = cold;
-		if (cold && at != cold) {
-			detach(cold);
-			cold->next = at->next;
-			at->next = cold;
-		}
-	}
-	focus(c);
-	arrange(c->mon);
-	/* if (c == nexttiled(selmon->clients)) */
-	/* 	if (!c || !(c = nexttiled(c->next))) */
-	/* 		return; */
-	/* pop(c); */
+	if (c == nexttiled(selmon->clients))
+		if (!c || !(c = nexttiled(c->next)))
+			return;
+	pop(c);
+	// if (c == nexttiled(selmon->clients)) {
+	// 	at = findbefore(prevzoom);
+	// 	if (at)
+	// 		cprevious = nexttiled(at->next);
+	// 	if (!cprevious || cprevious != prevzoom) {
+	// 		prevzoom = NULL;
+	// 		if (!c || !(c = nexttiled(c->next)))
+	// 			return;
+	// 	} else
+	// 		c = cprevious;
+	// }
+	// cold = nexttiled(selmon->clients);
+	// if (c != cold && !at)
+	// 	at = findbefore(c);
+	// detach(c);
+	// attach(c);
+	// /* swap windows instead of pushing the previous one down */
+	// if (c != cold && at) {
+	// 	prevzoom = cold;
+	// 	if (cold && at != cold) {
+	// 		detach(cold);
+	// 		cold->next = at->next;
+	// 		at->next = cold;
+	// 	}
+	// }
+	// focus(c);
+	// arrange(c->mon);
+	// /* if (c == nexttiled(selmon->clients)) */
+	// /* 	if (!c || !(c = nexttiled(c->next))) */
+	// /* 		return; */
+	// /* pop(c); */
 }
 
 void
