@@ -133,6 +133,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_a,          tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_a,          tagmon,         {.i = +1 } },
 	{ MODKEY,                       XK_z,          swalstopsel,    {0} },
+	{ MODKEY,                       XK_6,          swapfocus,    {0} },
 	{ MODKEY,                       XK_Left,       viewtoleft,         {0} },
 	{ MODKEY,                       XK_Right,      viewtoright,        {0} },
 	// { MODKEY|ShiftMask,             XK_h,          tagtoleft,               {0} },
@@ -145,7 +146,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_3,                      2)
 	TAGKEYS(                        XK_4,                      3)
 	TAGKEYS(                        XK_5,                      4)
-	TAGKEYS(                        XK_6,                      5)
+	// TAGKEYS(                        XK_6,                      5)
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
