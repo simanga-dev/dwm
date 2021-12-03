@@ -246,6 +246,7 @@ static void showhide(Client *c);
 static void sigchld(int unused);
 static void spawn(const Arg *arg);
 static void swapfocus();
+static void unfloatvisible(const Arg *arg);
 static void swal(Client *swer, Client *swee, int manage);
 static void swalreg(Client *c, const char* class, const char* inst, const char* title);
 static void swaldecayby(int decayby);
@@ -2132,6 +2133,21 @@ swapfocus()
 		focus(prevclient);
 		restack(prevclient->mon);
 	}
+}
+
+void
+unfloatvisible(const Arg *arg)
+{
+    Client *c;
+
+    for (c = selmon->clients; c; c = c->next)
+        if (ISVISIBLE(c) && c->isfloating)
+            c->isfloating = c->isfixed;
+
+    if (arg && arg->v)
+        setlayout(arg);
+    else
+        arrange(selmon);
 }
 
 void

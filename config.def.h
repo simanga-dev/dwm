@@ -68,9 +68,9 @@ static const int resizehints = 0;    /* 1 means respect size hints in tiled resi
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
-	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
+	{ "><>",      NULL },    /* no layout function means floating behavior */
+	{ "[]=",      tile },    /* first entry is default */
 	{ "###",      grid },
 	{ "TTT",      bstack },
 	{ "===",      bstackhoriz },
@@ -116,10 +116,11 @@ static Key keys[] = {
 	{ MODKEY,                       XK_q,          killclient,     {0} },
 	{ MODKEY|ShiftMask,             XK_q,          quit,           {0} },
 	{ MODKEY|ShiftMask,             XK_w,          killunsel,      {0} },
-	{ MODKEY,                       XK_t,          setlayout,      {.v = &layouts[0]} },
+	{ MODKEY,                       XK_t,          setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_f,          setlayout,      {.v = &layouts[1]} },
-	{ MODKEY|ShiftMask,             XK_f,          togglefloating, {0} },
-	{ MODKEY,                       XK_m,          setlayout,      {.v = &layouts[2]} },
+	// { MODKEY|ShiftMask,             XK_f,          togglefloating, {0} },
+    { MODKEY|ShiftMask,             XK_f,      unfloatvisible, {.v = &layouts[2]} },
+	{ MODKEY,                       XK_m,          setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_g,          setlayout,      {.v = &layouts[3]} },
 	{ MODKEY,                       XK_u,          setlayout,      {.v = &layouts[4]} },
 	{ MODKEY|ShiftMask,             XK_u,          setlayout,      {.v = &layouts[5]} },
