@@ -11,8 +11,8 @@ static const int viewontag          = 1;     /* Switch view on tag switch */
 static const int lockfullscreen     = 0; /* 1 will force focus on the fullscreen window */
 static const char *fonts[]          = { "JetBrainsMono-Regular:size=10" };
 static const char dmenufont[]       = "JetBrainsMono-Regular:size=10";
-static const char col_gray1[]       = "#121212";
-static const char col_gray2[]       = "#121212";
+static const char col_gray1[]       = "#2e2e2e";
+static const char col_gray2[]       = "#2e2e2e";
 static const char col_gray3[]       = "#a9b1d6";
 static const char col_gray4[]       = "#c0caf5";
 static const char col_cyan[]        = "#2e4274"; // static const char col_cyan[]        = "#164846";
@@ -47,8 +47,10 @@ static const Rule rules[] = {
 	{ "firefox",                    NULL,       NULL,       1 << 8,        0,          1,          0,           -1 },
 	{ "brave-browser-nightly",      NULL,       NULL,       1 << 8,        0,          1,          0,           -1 },
 	{ "Brave-browser-nightly",      NULL,       NULL,       1 << 8,        0,          1,          0,           -1 },
-	{ "Microsoft-edge-beta",      NULL,       NULL,       1 << 8,        0,          1,          0,           -1 },
-	{ "microsoft-edge-beta",      NULL,       NULL,       1 << 8,        0,          1,          0,           -1 },
+	{ "Microsoft-edge-beta",        NULL,       NULL,       1 << 8,        0,          1,          0,           -1 },
+	{ "microsoft-edge-beta",        NULL,       NULL,       1 << 8,        0,          1,          0,           -1 },
+	{ "Microsoft-edge",             NULL,       NULL,       1 << 8,        0,          1,          0,           -1 },
+	{ "microsoft-edge",             NULL,       NULL,       1 << 8,        0,          1,          0,           -1 },
 	{ "Slack",                      NULL,       NULL,       1 << 7,        0,          1,          0,           -1 },
 	{ "discord",                    NULL,       NULL,       1 << 7,        0,          0,          0,           -1 },
 	{ "Zoom",                       NULL,       NULL,       1 << 7,        0,          0,          0,           -1 },
@@ -107,8 +109,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_k,          inplacerotate,  {.i = -2} },
 	{ MODKEY,                       XK_y,          incnmaster,     {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_y,          incnmaster,     {.i = -1 } },
-	{ MODKEY,                       XK_comma,      setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_period,     setmfact,       {.f = +0.05} },
+	// { MODKEY,                       XK_comma,      setmfact,       {.f = -0.05} },
+	// { MODKEY,                       XK_period,     setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_h,          shiftview,      {.i = -1 } },
 	{ MODKEY,                       XK_l,          shiftview,      {.i = +1 } },
 	{ MODKEY,                       XK_space,      zoom,           {0} },
@@ -131,8 +133,12 @@ static Key keys[] = {
 	/* { MODKEY,                       XK_s,          focusmon,       {.i = -1 } }, */
 	/* { MODKEY|ShiftMask,             XK_s,          focusmon,       {.i = +1 } }, */
 	{ MODKEY,                       XK_v,          winview,        {0} },
-	{ MODKEY,                       XK_a,          tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_a,          tagmon,         {.i = +1 } },
+	// { MODKEY,                       XK_a,          tagmon,         {.i = -1 } },
+	// { MODKEY|ShiftMask,             XK_a,          tagmon,         {.i = +1 } },
+	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
+	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
 	{ MODKEY,                       XK_z,          swalstopsel,    {0} },
 	{ MODKEY,                       XK_6,          swapfocus,    {0} },
 	{ MODKEY,                       XK_Left,       viewtoleft,         {0} },
