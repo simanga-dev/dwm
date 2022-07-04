@@ -99,6 +99,7 @@ struct Client {
 	unsigned int tags;
 	unsigned int switchtotag;
 	int isfixed, iscentered, isfloating, isurgent, neverfocus, oldstate, isfullscreen, issticky;
+	char scratchkey;
 	Client *next;
 	Client *snext;
 	Client *swallowedby;
@@ -150,6 +151,7 @@ typedef struct {
 	unsigned int switchtotag;
 	int isfloating;
 	int monitor;
+	int scratchkey;
 } Rule;
 
 typedef struct Swallow Swallow;
@@ -249,6 +251,7 @@ static void seturgent(Client *c, int urg);
 static void showhide(Client *c);
 static void sigchld(int unused);
 static void spawn(const Arg *arg);
+static void spawnscratch(const Arg *arg);
 static void swapfocus();
 static void unfloatvisible(const Arg *arg);
 static void swal(Client *swer, Client *swee, int manage);
@@ -268,6 +271,7 @@ static void tagtoright(const Arg *arg);
 static void tile(Monitor *);
 static void togglebar(const Arg *arg);
 static void togglefloating(const Arg *arg);
+static void togglescratch(const Arg *arg);
 static void togglesticky(const Arg *arg);
 static void toggletag(const Arg *arg);
 static void toggleview(const Arg *arg);
@@ -380,6 +384,7 @@ applyrules(Client *c)
 	c->isfloating = 0;
 	c->iscentered = 0;
 	c->tags = 0;
+	c->scratchkey = 0;
 	XGetClassHint(dpy, c->win, &ch);
 	class    = ch.res_class ? ch.res_class : broken;
 	instance = ch.res_name  ? ch.res_name  : broken;
@@ -393,6 +398,12 @@ applyrules(Client *c)
 			c->iscentered = r->iscentered;
 			c->isfloating = r->isfloating;
 			c->tags |= r->tags;
+
+			c->scratchkey = r->scratchkey;
+
+            // if ( r->scratchkey )
+            //     c->tags = SCRATCHPAD_MASK;
+
 			for (m = mons; m && m->num != r->monitor; m = m->next);
 			if (m)
 				c->mon = m;
@@ -410,6 +421,9 @@ applyrules(Client *c)
 	// c->tags = c->tags & TAGMASK ? c->tags & TAGMASK : c->mon->tagset[c->mon->seltags];
 	if (c->tags != SCRATCHPAD_MASK)
 		c->tags = c->tags & TAGMASK ? c->tags & TAGMASK : c->mon->tagset[c->mon->seltags];
+
+	// if (c->tags == SCRATCHPAD_MASK)
+        // scratchpad_show_client (c);
 }
 
 int
@@ -513,6 +527,44 @@ attachstack(Client *c)
 	c->snext = c->mon->stack;
 	c->mon->stack = c;
 }
+
+void spawnscratch(const Arg *arg)
+{
+	if (fork() == 0) {
+		if (dpy)
+			close(ConnectionNumber(dpy));
+		setsid();
+		execvp(((char **)arg->v)[1], ((char **)arg->v)+1);
+		fprintf(stderr, "dwm: execvp %s", ((char **)arg->v)[1]);
+		perror(" failed");
+		exit(EXIT_SUCCESS);
+	}
+}
+
+
+
+ void
+togglescratch(const Arg *arg)
+{
+	Client *c;
+	unsigned int found = 0;
+
+	for (c = selmon->clients; c && !(found = c->scratchkey == ((char**)arg->v)[0][0]); c = c->next);
+	if (found) {
+		c->tags = ISVISIBLE(c) ? 0 : selmon->tagset[selmon->seltags];
+		focus(NULL);
+		arrange(selmon);
+
+		if (ISVISIBLE(c)) {
+			focus(c);
+			restack(selmon);
+		}
+
+	} else{
+		spawnscratch(arg);
+	}
+}
+
 
 void
 buttonpress(XEvent *e)
@@ -1817,7 +1869,7 @@ static void scratchpad_hide ()
 	if (selmon -> sel)
 	{
 		selmon -> sel -> tags = SCRATCHPAD_MASK;
-		selmon -> sel -> isfloating = 1;
+		// selmon -> sel -> issticky = 1;
 		focus(NULL);
 		arrange(selmon);
 	}
