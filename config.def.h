@@ -58,6 +58,7 @@ static const Rule rules[] = {
 	{ "speedcrunch",         	        NULL,       NULL,            0,        0,          0,          1,           -1,            0 },
 	{ "SpeedCrunch",         	        NULL,       NULL,            0,        0,          0,          1,           -1,            0 },
 	{ "Gimp",                           NULL,       NULL,       1 << 3,        0,          1,          1,           -1,            0 },
+	{ "jetbrains-pycharm",              NULL,       NULL,       1 << 1,        0,          1,          0,           -1,            0 },
 	{ "Inkscape",                       NULL,       NULL,       1 << 3,        0,          1,          0,           -1,            0 },
 	{ "firefox",                        NULL,       NULL,       1 << 8,        0,          1,          0,           -1,            0 },
 	{ "brave-browser-nightly",          NULL,       NULL,       1 << 8,        0,          1,          0,           -1,            0 },
@@ -93,9 +94,9 @@ static const int resizehints = 0;    /* 1 means respect size hints in tiled resi
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[M]",      monocle },
-	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[]=",      tile },    /* first entry is default */
+	{ "><>",      NULL },    /* no layout function means floating behavior */
+	{ "[M]",      monocle },
 	{ "###",      grid },
 	{ "TTT",      bstack },
 	{ "===",      bstackhoriz },
@@ -144,14 +145,14 @@ static Key keys[] = {
 	{ MODKEY,                       XK_q,          killclient,     {0} },
 	{ MODKEY|ShiftMask,             XK_q,          quit,           {0} },
 	{ MODKEY|ShiftMask,             XK_w,          killunsel,      {0} },
-	{ MODKEY,                       XK_t,          setlayout,      {.v = &layouts[2]} },
+	{ MODKEY,                       XK_t,          setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,          setlayout,      {.v = &layouts[1]} },
 	// { MODKEY|ShiftMask,             XK_f,          togglefloating, {0} },
     { MODKEY|ShiftMask,             XK_f,          unfloatvisible, {.v = &layouts[0]} },
-	{ MODKEY,                       XK_m,          setlayout,      {.v = &layouts[0]} },
+	{ MODKEY,                       XK_m,          setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_g,          setlayout,      {.v = &layouts[3]} },
 	{ MODKEY,                       XK_u,          setlayout,      {.v = &layouts[4]} },
-	{ MODKEY|ShiftMask,             XK_u,          setlayout,      {.v = &layouts[1]} },
+	{ MODKEY|ShiftMask,             XK_u,          setlayout,      {.v = &layouts[5]} },
 	{ MODKEY|ShiftMask,             XK_space,      setlayout,      {0} },
 	{ MODKEY,                       XK_0,          view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,          tag,            {.ui = ~0 } },
