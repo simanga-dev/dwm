@@ -150,8 +150,8 @@ typedef struct {
 	int iscentered;
 	unsigned int switchtotag;
 	int isfloating;
+	int issticky;
 	int monitor;
-	int scratchkey;
 } Rule;
 
 typedef struct Swallow Swallow;
@@ -385,6 +385,7 @@ applyrules(Client *c)
 	c->iscentered = 0;
 	c->tags = 0;
 	c->scratchkey = 0;
+	c->issticky = 0;
 	XGetClassHint(dpy, c->win, &ch);
 	class    = ch.res_class ? ch.res_class : broken;
 	instance = ch.res_name  ? ch.res_name  : broken;
@@ -397,12 +398,15 @@ applyrules(Client *c)
 		{
 			c->iscentered = r->iscentered;
 			c->isfloating = r->isfloating;
-			c->tags |= r->tags;
+			c->issticky = r->issticky;
+            c->tags |= r->tags;
 
-			c->scratchkey = r->scratchkey;
+            if (c->tags == SCRATCHPAD_MASK)
+            {
+                scratchpad_last_showed = c;
+                c -> tags = 0;
+            } 
 
-            // if ( r->scratchkey )
-            //     c->tags = SCRATCHPAD_MASK;
 
 			for (m = mons; m && m->num != r->monitor; m = m->next);
 			if (m)
@@ -417,13 +421,9 @@ applyrules(Client *c)
 	if (ch.res_class)
 		XFree(ch.res_class);
 	if (ch.res_name)
-		XFree(ch.res_name);
 	// c->tags = c->tags & TAGMASK ? c->tags & TAGMASK : c->mon->tagset[c->mon->seltags];
 	if (c->tags != SCRATCHPAD_MASK)
 		c->tags = c->tags & TAGMASK ? c->tags & TAGMASK : c->mon->tagset[c->mon->seltags];
-
-	// if (c->tags == SCRATCHPAD_MASK)
-        // scratchpad_show_client (c);
 }
 
 int
@@ -1869,7 +1869,6 @@ static void scratchpad_hide ()
 	if (selmon -> sel)
 	{
 		selmon -> sel -> tags = SCRATCHPAD_MASK;
-		// selmon -> sel -> issticky = 1;
 		focus(NULL);
 		arrange(selmon);
 	}

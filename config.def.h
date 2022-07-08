@@ -15,8 +15,8 @@ static const char col_gray1[]       = "#21262d"; //"#1f1f1f";
 static const char col_gray2[]       = "#21262d"; //"#1f1f1f";"#1f1f1f";
 static const char col_gray3[]       = "#a9b1d6";
 static const char col_gray4[]       = "#c0caf5";
-static const char col_cyan[]        = "#2e4274"; // static const char col_cyan[]        = "#164846";
-static const char col_cyan1[]        = "#2e4274"; //7ee686 static 42cba5 const char col_cyan[]        = "#164846";
+static const char col_cyan[]        = "#005577"; // static const char col_cyan[]        = "#164846";
+static const char col_cyan1[]        = "#005577"; //7ee686 static 42cba5 const char col_cyan[]        = "#164846";
 static const char col_urgborder[]   = "#ff9e64";
 static const unsigned int baralpha = 0xd0;
 static const unsigned int borderalpha = OPAQUE;
@@ -52,34 +52,43 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
      *	"bluemail", "BlueMail
+     *	
+     *	WM_CLASS(STRING) = "Toolkit", "firefox"
+WM_ICON_NAME(STRING) = "Picture-in-Picture"
+_NET_WM_ICON_NAME(UTF8_STRING) = "Picture-in-Picture"
+WM_NAME(STRING) = "Picture-in-Picture"
+_NET_WM_NAME(UTF8_STRING) = "Picture-in-Picture"
+
+     *   CLASS(STRING) = "Toolkit", "firefox"
 	 */
-	/* class                            instance    title       tags mask      iscentered  switchtotag  isfloating   monitor   scratch key */ 
-	{ "Org.gnome.Nautilus",             NULL,       NULL,       1 << 2,        0,          1,          0,           -1,            0 },
-	{ "speedcrunch",         	        NULL,       NULL,            0,        0,          0,          1,           -1,            0 },
-	{ "SpeedCrunch",         	        NULL,       NULL,            0,        0,          0,          1,           -1,            0 },
-	{ "Gimp",                           NULL,       NULL,       1 << 3,        0,          1,          1,           -1,            0 },
-	{ "jetbrains-pycharm",              NULL,       NULL,       1 << 1,        0,          1,          0,           -1,            0 },
-	{ "Inkscape",                       NULL,       NULL,       1 << 3,        0,          1,          0,           -1,            0 },
-	{ "firefox",                        NULL,       NULL,       1 << 8,        0,          1,          0,           -1,            0 },
-	{ "brave-browser-nightly",          NULL,       NULL,       1 << 8,        0,          1,          0,           -1,            0 },
-	{ "Brave-browser-nightly",          NULL,       NULL,       1 << 8,        0,          1,          0,           -1,            0 },
-	{ "Microsoft-edge-beta",            NULL,       NULL,       1 << 8,        0,          1,          0,           -1,            0 },
-	{ "microsoft-edge-beta",            NULL,       NULL,       1 << 8,        0,          1,          0,           -1,            0 },
-	{ "Microsoft-edge",                 NULL,       NULL,       1 << 8,        0,          1,          0,           -1,            0 },
-	{ "microsoft-edge",                 NULL,       NULL,       1 << 8,        0,          1,          0,           -1,            0 },
-	{ "Slack",                          NULL,       NULL,       1 << 7,        0,          1,          0,           -1,            0 },
-	{ "whatsapp-nativefier-d40211",     NULL,       NULL,       1 << 7,        0,          1,          0,           -1,            0 },
-	{ "obs",                            NULL,       NULL,       1 << 7,        0,          1,          0,           -1,            0 },
-	{ "kdenlive",                       NULL,       NULL,       1 << 7,        0,          1,          0,           -1,            0 },
-	{ "discord",                        NULL,       NULL,       1 << 7,        0,          1,          0,           -1,            0 },
-	{ "Zoom",                           NULL,       NULL,       1 << 7,        0,          0,          0,           -1,            0 },
-	{ "DBeaver",                        NULL,       NULL,       1 << 7,        0,          1,          0,           -1,            0 },
-	{ "Thunderbird",                    NULL,       NULL,       1 << 6,        0,          1,          0,           -1,            0 },
-	{ "Evolution",                      NULL,       NULL,       1 << 6,        0,          1,          0,           -1,            0 },
-	{ "BlueMail",                       NULL,       NULL,       1 << 6,        0,          1,          0,           -1,            0 },
-	{ "st",                             NULL,       NULL,       1 << 0,        0,          1,          0,           -1,            0 },
-	{ "Notes",                          NULL,       "Notes",         0,        1,          0,          1,           -1,            1 },
-	{ "NIDE",                           NULL,       NULL,            0,        1,          0,          0,           -1,            1 },
+	/* class                            instance    title       tags mask      iscentered  switchtotag  isfloating  issticky  monitor */ 
+	{ "Org.gnome.Nautilus",             NULL,       NULL,       1 << 2,        0,          1,          0,          0,          -1 },
+	{ "speedcrunch",         	        NULL,       NULL,            0,        1,          0,          1,          1,          -1 },
+	{ "SpeedCrunch",         	        NULL,       NULL,            0,        1,          0,          1,          1,          -1 },
+	{ "Gimp",                           NULL,       NULL,       1 << 3,        0,          1,          1,          0,          -1 },
+	{ "jetbrains-pycharm",              NULL,       NULL,       1 << 1,        0,          1,          0,          0,          -1 },
+	{ "Inkscape",                       NULL,       NULL,       1 << 3,        0,          1,          0,          0,          -1 },
+	{ "firefox",                        NULL,       NULL,       1 << 8,        0,          1,          0,          0,          -1 },
+	{ "firefox",                        "Toolkit",  NULL,           0,         1,          0,          1,          1,          -1 },
+	{ "brave-browser-nightly",          NULL,       NULL,       1 << 8,        0,          1,          0,          0,          -1 },
+	{ "Brave-browser-nightly",          NULL,       NULL,       1 << 8,        0,          1,          0,          0,          -1 },
+	{ "Microsoft-edge-beta",            NULL,       NULL,       1 << 8,        0,          1,          0,          0,          -1 },
+	{ "microsoft-edge-beta",            NULL,       NULL,       1 << 8,        0,          1,          0,          0,          -1 },
+	{ "Microsoft-edge",                 NULL,       NULL,       1 << 8,        0,          1,          0,          0,          -1 },
+	{ "microsoft-edge",                 NULL,       NULL,       1 << 8,        0,          1,          0,          0,          -1 },
+	{ "Slack",                          NULL,       NULL,       1 << 7,        0,          1,          0,          0,          -1 },
+	{ "whatsapp-nativefier-d40211",     NULL,       NULL,       1 << 7,        0,          1,          0,          0,          -1 },
+	{ "obs",                            NULL,       NULL,       1 << 7,        0,          1,          0,          0,          -1 },
+	{ "kdenlive",                       NULL,       NULL,       1 << 7,        0,          1,          0,          0,          -1 },
+	{ "discord",                        NULL,       NULL,       1 << 7,        0,          1,          0,          0,          -1 },
+	{ "Zoom",                           NULL,       NULL,       1 << 7,        0,          0,          0,          0,          -1 },
+	{ "DBeaver",                        NULL,       NULL,       1 << 7,        0,          1,          0,          0,          -1 },
+	{ "Thunderbird",                    NULL,       NULL,       1 << 6,        0,          1,          0,          0,          -1 },
+	{ "Evolution",                      NULL,       NULL,       1 << 6,        0,          1,          0,          0,          -1 },
+	{ "BlueMail",                       NULL,       NULL,       1 << 6,        0,          1,          0,          0,          -1 },
+	{ "st",                             NULL,       NULL,       1 << 0,        0,          1,          0,          0,          -1 },
+	{ "Notes",                          NULL,       "Notes",         0,        1,          0,          1,          1,          -1 },
+	{ "NIDE",                           NULL,       NULL,  SCRATCHPAD_MASK,        1,          0,      0,          0,          -1 },
 };
 
 /* window swallowing */
