@@ -4,6 +4,7 @@
 
 /* appearance */
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
+static const unsigned int fborderpx = 0;        /* border pixel of floating windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
@@ -61,34 +62,34 @@ _NET_WM_NAME(UTF8_STRING) = "Picture-in-Picture"
 
      *   CLASS(STRING) = "Toolkit", "firefox"
 	 */
-	/* class                            instance    title       tags mask      iscentered  switchtotag  isfloating  issticky  monitor */ 
-	{ "Org.gnome.Nautilus",             NULL,       NULL,       1 << 2,        0,          1,          0,          0,          -1 },
-	{ "speedcrunch",         	        NULL,       NULL,            0,        1,          0,          1,          1,          -1 },
-	{ "SpeedCrunch",         	        NULL,       NULL,            0,        1,          0,          1,          1,          -1 },
-	{ "Gimp",                           NULL,       NULL,       1 << 3,        0,          1,          1,          0,          -1 },
-	{ "jetbrains-pycharm",              NULL,       NULL,       1 << 1,        0,          1,          0,          0,          -1 },
-	{ "Inkscape",                       NULL,       NULL,       1 << 3,        0,          1,          0,          0,          -1 },
-	{ "firefox",                        NULL,       NULL,       1 << 8,        0,          1,          0,          0,          -1 },
-	{ "firefox",                        "Toolkit",  NULL,           0,         1,          0,          1,          1,          -1 },
-	{ "brave-browser-nightly",          NULL,       NULL,       1 << 8,        0,          1,          0,          0,          -1 },
-	{ "Brave-browser-nightly",          NULL,       NULL,       1 << 8,        0,          1,          0,          0,          -1 },
-	{ "Microsoft-edge-beta",            NULL,       NULL,       1 << 8,        0,          1,          0,          0,          -1 },
-	{ "microsoft-edge-beta",            NULL,       NULL,       1 << 8,        0,          1,          0,          0,          -1 },
-	{ "Microsoft-edge",                 NULL,       NULL,       1 << 8,        0,          1,          0,          0,          -1 },
-	{ "microsoft-edge",                 NULL,       NULL,       1 << 8,        0,          1,          0,          0,          -1 },
-	{ "Slack",                          NULL,       NULL,       1 << 7,        0,          1,          0,          0,          -1 },
-	{ "whatsapp-nativefier-d40211",     NULL,       NULL,       1 << 7,        0,          1,          0,          0,          -1 },
-	{ "obs",                            NULL,       NULL,       1 << 7,        0,          1,          0,          0,          -1 },
-	{ "kdenlive",                       NULL,       NULL,       1 << 7,        0,          1,          0,          0,          -1 },
-	{ "discord",                        NULL,       NULL,       1 << 7,        0,          1,          0,          0,          -1 },
-	{ "Zoom",                           NULL,       NULL,       1 << 7,        0,          0,          0,          0,          -1 },
-	{ "DBeaver",                        NULL,       NULL,       1 << 7,        0,          1,          0,          0,          -1 },
-	{ "Thunderbird",                    NULL,       NULL,       1 << 6,        0,          1,          0,          0,          -1 },
-	{ "Evolution",                      NULL,       NULL,       1 << 6,        0,          1,          0,          0,          -1 },
-	{ "BlueMail",                       NULL,       NULL,       1 << 6,        0,          1,          0,          0,          -1 },
-	{ "st",                             NULL,       NULL,       1 << 0,        0,          1,          0,          0,          -1 },
-	{ "Notes",                          NULL,       "Notes",         0,        1,          0,          1,          1,          -1 },
-	{ "NIDE",                           NULL,       NULL,  SCRATCHPAD_MASK,        1,          0,      0,          0,          -1 },
+	/* class                            instance    title       tags mask      iscentered  switchtotag  isfloating  issticky  cantfocus monitor */ 
+	{ "Org.gnome.Nautilus",             NULL,       NULL,       1 << 2,        0,          1,          0,          0,        0,         -1 },
+	{ "speedcrunch",         	        NULL,       NULL,            0,        1,          0,          1,          1,        0,         -1 },
+	{ "SpeedCrunch",         	        NULL,       NULL,            0,        1,          0,          1,          1,        0,         -1 },
+	{ "Gimp",                           NULL,       NULL,       1 << 3,        0,          1,          1,          0,        0,         -1 },
+	{ "jetbrains-pycharm",              NULL,       NULL,       1 << 1,        0,          1,          0,          0,        0,         -1 },
+	{ "Inkscape",                       NULL,       NULL,       1 << 3,        0,          1,          0,          0,        0,         -1 },
+	{ "firefox",                        NULL,       NULL,       1 << 8,        0,          1,          0,          0,        0,         -1 },
+	{ "firefox",                        "Toolkit",  NULL,           0,         1,          0,          1,          1,        1,         -1 },
+	{ "brave-browser-nightly",          NULL,       NULL,       1 << 8,        0,          1,          0,          0,        0,         -1 },
+	{ "Brave-browser-nightly",          NULL,       NULL,       1 << 8,        0,          1,          0,          0,        0,         -1 },
+	{ "Microsoft-edge-beta",            NULL,       NULL,       1 << 8,        0,          1,          0,          0,        0,         -1 },
+	{ "microsoft-edge-beta",            NULL,       NULL,       1 << 8,        0,          1,          0,          0,        0,         -1 },
+	{ "Microsoft-edge",                 NULL,       NULL,       1 << 8,        0,          1,          0,          0,        0,         -1 },
+	{ "microsoft-edge",                 NULL,       NULL,       1 << 8,        0,          1,          0,          0,        0,         -1 },
+	{ "Slack",                          NULL,       NULL,       1 << 7,        0,          1,          0,          0,        0,         -1 },
+	{ "whatsapp-nativefier-d40211",     NULL,       NULL,       1 << 7,        0,          1,          0,          0,        0,         -1 },
+	{ "obs",                            NULL,       NULL,       1 << 7,        0,          1,          0,          0,        0,         -1 },
+	{ "kdenlive",                       NULL,       NULL,       1 << 7,        0,          1,          0,          0,        0,         -1 },
+	{ "discord",                        NULL,       NULL,       1 << 7,        0,          1,          0,          0,        0,         -1 },
+	{ "Zoom",                           NULL,       NULL,       1 << 7,        0,          0,          0,          0,        0,         -1 },
+	{ "DBeaver",                        NULL,       NULL,       1 << 7,        0,          1,          0,          0,        0,         -1 },
+	{ "Thunderbird",                    NULL,       NULL,       1 << 6,        0,          1,          0,          0,        0,         -1 },
+	{ "Evolution",                      NULL,       NULL,       1 << 6,        0,          1,          0,          0,        0,         -1 },
+	{ "BlueMail",                       NULL,       NULL,       1 << 6,        0,          1,          0,          0,        0,         -1 },
+	{ "st",                             NULL,       NULL,       1 << 0,        0,          1,          0,          0,        0,         -1 },
+	{ "Notes",                          NULL,       "Notes",         0,        1,          0,          1,          1,        0,         -1 },
+	{ "NIDE",                           NULL,       NULL,  SCRATCHPAD_MASK,        1,          0,      0,          0,        0,         -1 },
 };
 
 /* window swallowing */
@@ -135,7 +136,8 @@ static Key keys[] = {
 	/* modifier                     key            function        argument */
 	{ MODKEY,                       XK_p,          spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return,     spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_e,          spawn,          {.v = lockcmd } },
+	{ MODKEY|ShiftMask,             XK_e,          spawn,          {.v = lockcmd } },
+	{ MODKEY,                       XK_e,      focusurgent,         {0} },
 	{ MODKEY,                       XK_b,          togglebar,      {0} },
 	{ MODKEY,                       XK_j,          focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,          focusstack,     {.i = -1 } },
@@ -168,14 +170,14 @@ static Key keys[] = {
 	{ MODKEY,                       XK_s,          togglesticky,   {0} },
 	/* { MODKEY,                       XK_s,          focusmon,       {.i = -1 } }, */
 	/* { MODKEY|ShiftMask,             XK_s,          focusmon,       {.i = +1 } }, */
-	// { MODKEY,                       XK_v,          winview,        {0} },
+	{ MODKEY,                       XK_v,          winview,        {0} },
 	// { MODKEY,                       XK_a,          tagmon,         {.i = -1 } },
 	// { MODKEY|ShiftMask,             XK_a,          togglescratch,         {0} },
 	{ MODKEY,                       XK_comma,       focusmon,       {.i = -1 } },
 	{ MODKEY,                       XK_period,      focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,       tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period,      tagmon,         {.i = +1 } },
-	{ MODKEY,                       XK_z,           swalstopsel,    {0} },
+	{ MODKEY,                       XK_z,           togglecanfocusfloating,    {0} },
 	// { MODKEY,                       XK_6,          swapfocus,    {0} },
 	{ MODKEY,                       XK_Left,        viewtoleft,         {0} },
 	{ MODKEY,                       XK_Right,       viewtoright,        {0} },
@@ -184,7 +186,6 @@ static Key keys[] = {
 	{ MODKEY,                       XK_grave,           scratchpad_show,          {0} },
 	{ MODKEY|ShiftMask,             XK_grave,           scratchpad_hide,          {0} },
 	{ MODKEY|ShiftMask,             XK_r,           scratchpad_remove,        {0} },
-	{ MODKEY,                       XK_r,           scratchpad_remove,        {0} },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)

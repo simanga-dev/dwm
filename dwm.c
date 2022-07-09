@@ -98,7 +98,7 @@ struct Client {
 	int bw, oldbw;
 	unsigned int tags;
 	unsigned int switchtotag;
-	int isfixed, iscentered, isfloating, isurgent, neverfocus, oldstate, isfullscreen, issticky;
+	int isfixed, iscentered, isfloating, isurgent, neverfocus, oldstate, isfullscreen, issticky, cantfocus;
 	char scratchkey;
 	Client *next;
 	Client *snext;
@@ -151,6 +151,7 @@ typedef struct {
 	unsigned int switchtotag;
 	int isfloating;
 	int issticky;
+	int cantfocus;
 	int monitor;
 } Rule;
 
@@ -202,6 +203,7 @@ static void enternotify(XEvent *e);
 static void expose(XEvent *e);
 static int fakesignal(void);
 static void focus(Client *c);
+static void focusurgent(const Arg *arg);
 static void focusin(XEvent *e);
 static void focusmon(const Arg *arg);
 static void focusstack(const Arg *arg);
@@ -230,6 +232,7 @@ static Monitor *recttomon(int x, int y, int w, int h);
 static void resize(Client *c, int x, int y, int w, int h, int interact);
 static void resizeclient(Client *c, int x, int y, int w, int h);
 static void resizemouse(const Arg *arg);
+static void resetcanfocusfloating();
 static void restack(Monitor *m);
 static void run(void);
 static void scan(void);
@@ -271,6 +274,7 @@ static void tagtoright(const Arg *arg);
 static void tile(Monitor *);
 static void togglebar(const Arg *arg);
 static void togglefloating(const Arg *arg);
+static void togglecanfocusfloating(const Arg *arg);
 static void togglescratch(const Arg *arg);
 static void togglesticky(const Arg *arg);
 static void toggletag(const Arg *arg);
@@ -386,6 +390,7 @@ applyrules(Client *c)
 	c->tags = 0;
 	c->scratchkey = 0;
 	c->issticky = 0;
+	c->cantfocus = 0;
 	XGetClassHint(dpy, c->win, &ch);
 	class    = ch.res_class ? ch.res_class : broken;
 	instance = ch.res_name  ? ch.res_name  : broken;
@@ -399,6 +404,7 @@ applyrules(Client *c)
 			c->iscentered = r->iscentered;
 			c->isfloating = r->isfloating;
 			c->issticky = r->issticky;
+			c->cantfocus = r->cantfocus;
             c->tags |= r->tags;
 
             if (c->tags == SCRATCHPAD_MASK)
@@ -406,7 +412,6 @@ applyrules(Client *c)
                 scratchpad_last_showed = c;
                 c -> tags = 0;
             } 
-
 
 			for (m = mons; m && m->num != r->monitor; m = m->next);
 			if (m)
@@ -1093,6 +1098,8 @@ focus(Client *c)
 	if (selmon->sel && selmon->sel != c)
 		unfocus(selmon->sel, 0);
 	if (c) {
+		if (c->cantfocus)
+			return;
 		if (c->mon != selmon)
 			selmon = c->mon;
 		if (c->isurgent)
@@ -1108,6 +1115,21 @@ focus(Client *c)
 	}
 	selmon->sel = c;
 	drawbars();
+}
+
+static void
+focusurgent(const Arg *arg) {
+	Client *c;
+	int i;
+	for(c=selmon->clients; c && !c->isurgent; c=c->next);
+	if(c) {
+		for(i=0; i < LENGTH(tags) && !((1 << i) & c->tags); i++);
+		if(i < LENGTH(tags)) {
+			const Arg a = {.ui = 1 << i};
+			view(&a);
+			focus(c);
+		}
+	}
 }
 
 /* there are some broken focus acquiring clients needing extra handling */
@@ -1205,16 +1227,16 @@ focusstack(const Arg *arg)
 	if (!selmon->sel)
 		return;
 	if (arg->i > 0) {
-		for (c = selmon->sel->next; c && !ISVISIBLE(c); c = c->next);
+		for (c = selmon->sel->next; c && (!ISVISIBLE(c) || c->cantfocus); c = c->next);
 		if (!c)
-			for (c = selmon->clients; c && !ISVISIBLE(c); c = c->next);
+			for (c = selmon->clients; c && (!ISVISIBLE(c) || c->cantfocus); c = c->next);
 	} else {
 		for (i = selmon->clients; i != selmon->sel; i = i->next)
-			if (ISVISIBLE(i))
+      if (ISVISIBLE(i) && !i->cantfocus)
 				c = i;
 		if (!c)
 			for (; i; i = i->next)
-				if (ISVISIBLE(i))
+        if (ISVISIBLE(i) && !i->cantfocus)
 					c = i;
 	}
 	if (c) {
@@ -1440,6 +1462,8 @@ manage(Window w, XWindowAttributes *wa)
 	c->y = MAX(c->y, ((c->mon->by == c->mon->my) && (c->x + (c->w / 2) >= c->mon->wx)
 		&& (c->x + (c->w / 2) < c->mon->wx + c->mon->ww)) ? bh : c->mon->my);
 	c->bw = borderpx;
+	if (c->isfloating)
+		c->bw = fborderpx;
 
 	wc.border_width = c->bw;
 	XConfigureWindow(dpy, w, CWBorderWidth, &wc);
@@ -2570,7 +2594,22 @@ tagmon(const Arg *arg)
 {
 	if (!selmon->sel || !mons->next)
 		return;
-	sendmon(selmon->sel, dirtomon(arg->i));
+	// sendmon(selmon->sel, dirtomon(arg->i));
+    Client *c = selmon->sel;
+    Monitor *m = dirtomon(arg->i);
+
+	if (c->mon == m)
+		return;
+	unfocus(c, 1);
+	detach(c);
+	detachstack(c);
+	c->mon = m;
+	// c->tags = m->tagset[m->seltags]; /* assign tags of target monitor */
+	attach(c);
+	attachstack(c);
+	focus(NULL);
+	arrange(NULL);
+
     focusmon(arg);
 }
 
@@ -2642,11 +2681,71 @@ togglefloating(const Arg *arg)
 	/* if (selmon->sel->isfullscreen) /1* no support for fullscreen windows *1/ */
 	/* 	return; */
 	selmon->sel->isfloating = !selmon->sel->isfloating || selmon->sel->isfixed;
-	if (selmon->sel->isfloating)
+	if (selmon->sel->isfloating) {
+		selmon->sel->bw = fborderpx;
+		configure(selmon->sel);
+        int borderdiff = (fborderpx - borderpx) * 2;
 		resize(selmon->sel, selmon->sel->x, selmon->sel->y,
-			selmon->sel->w, selmon->sel->h, 0);
+			selmon->sel->w - borderdiff, selmon->sel->h - borderdiff, 0);
+	} else {
+		selmon->sel->bw = borderpx;
+		configure(selmon->sel);
+	}
+
+    resetcanfocusfloating();
 	arrange(selmon);
 }
+
+
+
+void
+resetcanfocusfloating()
+{
+	unsigned int i, n;
+	Client *c;
+
+	for (n = 0, c = selmon->clients; c; c = c->next, n++);
+	if (n == 0)
+		return;
+
+	for (i = 0, c = selmon->clients; c; c = c->next, i++)
+    if (c->isfloating)
+      c->cantfocus = 0;
+
+	arrange(selmon);
+}
+
+void
+togglecanfocusfloating(const Arg *arg)
+{
+	unsigned int n;
+	Client *c, *cf = NULL;
+
+  if (!selmon->sel)
+      return;
+
+  for (c = selmon->clients; c; c = c->next)
+      if (c->cantfocus == 1) {
+          cf = c;
+      }
+
+  if (cf) {
+      resetcanfocusfloating();
+      focus(cf);
+  } else {
+    for (n = 0, c = selmon->clients; c; c = c->next)
+        if (c->isfloating)
+            c->cantfocus = !c->cantfocus;
+        else
+            n++;
+
+    if (n && selmon->sel->isfloating) {
+        c = nexttiled(selmon->clients);
+        focus(c);
+    }
+  }
+}
+
 
  void
 togglesticky(const Arg *arg)
