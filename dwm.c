@@ -401,10 +401,10 @@ applyrules(Client *c)
 		&& (!r->class || strstr(class, r->class))
 		&& (!r->instance || strstr(instance, r->instance)))
 		{
-			c->iscentered = r->iscentered;
-			c->isfloating = r->isfloating;
 			c->issticky = r->issticky;
 			c->cantfocus = r->cantfocus;
+			c->isfloating = r->isfloating;
+			c->iscentered = r->iscentered;
             c->tags |= r->tags;
 
             if (c->tags == SCRATCHPAD_MASK)

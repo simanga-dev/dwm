@@ -70,7 +70,7 @@ _NET_WM_NAME(UTF8_STRING) = "Picture-in-Picture"
 	{ "jetbrains-pycharm",              NULL,       NULL,       1 << 1,        0,          1,          0,          0,        0,         -1 },
 	{ "Inkscape",                       NULL,       NULL,       1 << 3,        0,          1,          0,          0,        0,         -1 },
 	{ "firefox",                        NULL,       NULL,       1 << 8,        0,          1,          0,          0,        0,         -1 },
-	{ "firefox",                        "Toolkit",  NULL,           0,         1,          0,          1,          1,        1,         -1 },
+	{ "firefox",                        "Toolkit",  NULL,            0,        0,          0,          1,          1,        1,         -1 },
 	{ "brave-browser-nightly",          NULL,       NULL,       1 << 8,        0,          1,          0,          0,        0,         -1 },
 	{ "Brave-browser-nightly",          NULL,       NULL,       1 << 8,        0,          1,          0,          0,        0,         -1 },
 	{ "Microsoft-edge-beta",            NULL,       NULL,       1 << 8,        0,          1,          0,          0,        0,         -1 },
