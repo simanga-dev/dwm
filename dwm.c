@@ -98,7 +98,7 @@ struct Client {
 	int bw, oldbw;
 	unsigned int tags;
 	unsigned int switchtotag;
-	int isfixed, iscentered, isfloating, isurgent, neverfocus, oldstate, isfullscreen, issticky, cantfocus;
+	int isfixed, iscentered, isfloating, isurgent, neverfocus, oldstate, isfullscreen, issticky, cantfocus, ispermanent;
 	char scratchkey;
 	Client *next;
 	Client *snext;
@@ -152,6 +152,7 @@ typedef struct {
 	int isfloating;
 	int issticky;
 	int cantfocus;
+	int ispermanent;
 	int monitor;
 } Rule;
 
@@ -207,6 +208,7 @@ static void focusurgent(const Arg *arg);
 static void focusin(XEvent *e);
 static void focusmon(const Arg *arg);
 static void focusstack(const Arg *arg);
+static Atom getatomprop(Client *c, Atom prop);
 static Atom getatomprop(Client *c, Atom prop);
 static int getrootptr(int *x, int *y);
 static long getstate(Window w);
@@ -368,6 +370,7 @@ struct Pertag {
 	unsigned int sellts[LENGTH(tags) + 1]; /* selected layouts */
 	const Layout *ltidxs[LENGTH(tags) + 1][2]; /* matrix of tags and layouts indexes  */
 	int showbars[LENGTH(tags) + 1]; /* display bar for the current tag */
+	const Layout *lts[LENGTH(tags) + 1];
 };
 
 /* compile-time check if all tags fit into an unsigned int bit array. */
@@ -391,6 +394,7 @@ applyrules(Client *c)
 	c->scratchkey = 0;
 	c->issticky = 0;
 	c->cantfocus = 0;
+    c->ispermanent = 0;
 	XGetClassHint(dpy, c->win, &ch);
 	class    = ch.res_class ? ch.res_class : broken;
 	instance = ch.res_name  ? ch.res_name  : broken;
@@ -405,6 +409,7 @@ applyrules(Client *c)
 			c->cantfocus = r->cantfocus;
 			c->isfloating = r->isfloating;
 			c->iscentered = r->iscentered;
+			c->ispermanent = r->ispermanent;
             c->tags |= r->tags;
 
             if (c->tags == SCRATCHPAD_MASK)
@@ -815,6 +820,7 @@ createmon(void)
 	m->lt[0] = &layouts[0];
 	m->lt[1] = &layouts[1 % LENGTH(layouts)];
 	strncpy(m->ltsymbol, layouts[0].symbol, sizeof m->ltsymbol);
+	// strncpy(m->ltsymbol, initlayouts[1] && initlayouts[1] < LENGTH(layouts) ? layouts[initlayouts[1]].symbol : layouts[0].symbol, sizeof m->ltsymbol);
 	m->pertag = ecalloc(1, sizeof(Pertag));
 	m->pertag->curtag = m->pertag->prevtag = 1;
 
@@ -1392,7 +1398,7 @@ keypress(XEvent *e)
 void
 killclient(const Arg *arg)
 {
-	if (!selmon->sel)
+	if(!selmon->sel || selmon->sel->ispermanent)
 		return;
 	if (!sendevent(selmon->sel, wmatom[WMDelete])) {
 		XGrabServer(dpy);
@@ -2078,6 +2084,7 @@ setlayout(const Arg *arg)
 	if (arg && arg->v)
 		selmon->lt[selmon->sellt] = selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt] = (Layout *)arg->v;
 	strncpy(selmon->ltsymbol, selmon->lt[selmon->sellt]->symbol, sizeof selmon->ltsymbol);
+		// selmon->lt[selmon->sellt] = selmon->lts[selmon->curtag] = (Layout *)arg->v;
 	if (selmon->sel)
 		arrange(selmon);
 	else
@@ -2096,6 +2103,7 @@ setmfact(const Arg *arg)
 	if (f < 0.05 || f > 0.95)
 		return;
 	selmon->mfact = selmon->pertag->mfacts[selmon->pertag->curtag] = f;
+	// selmon->mfact = selmon->mfacts[selmon->curtag] = f;
 	arrange(selmon);
 }
 
@@ -2145,6 +2153,29 @@ setup(void)
 	scheme = ecalloc(LENGTH(colors), sizeof(Clr *));
 	for (i = 0; i < LENGTH(colors); i++)
 		scheme[i] = drw_scm_create(drw, colors[i], alphas[i], 3);
+
+	// /* init tags */
+	// for(m = mons; m; m = m->next)
+	// 	m->curtag = m->prevtag = 1;
+	// /* init mfacts */
+	// for(m = mons; m; m = m->next) {
+	// 	for(i=0; i < LENGTH(tags) + 1 ; i++) {
+	// 		m->mfacts[i] = m->mfact;
+	// 	}
+	// }
+	// /* init layouts */
+	// for(m = mons; m; m = m->next) {
+	// 	for(i=0; i < LENGTH(tags) + 1; i++) {
+	// 		m->lts[i] = initlayouts[i] && initlayouts[i] < LENGTH(layouts) ? &layouts[initlayouts[i]] : &layouts[0];
+	// 	}
+	// }
+	// /* init bars */
+	// for(m = mons; m; m = m->next) {
+	// 	for(i=0; i < LENGTH(tags) + 1; i++) {
+	// 		m->showbars[i] = m->showbar;
+	// 	}
+	// }
+
 	/* init bars */
 	updatebars();
 	updatestatus();

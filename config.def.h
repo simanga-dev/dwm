@@ -41,10 +41,17 @@ static const XPoint stickyiconbb    = {4,8};	/* defines the bottom right corner 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
+/* initial layouts */ 
+static const int  initlayouts[] = { 0, 0, 1, 0, 1, 0, 1, 2, 2, 3 };
+
+
 static const char *upvol[]   = { "/usr/bin/pactl", "set-sink-volume", "0", "+5%",     NULL };
 static const char *downvol[] = { "/usr/bin/pactl", "set-sink-volume", "0", "-5%",     NULL };
 static const char *mutevol[] = { "/usr/bin/pactl", "set-sink-mute",   "0", "toggle",  NULL };
 static const char *mic[] = { "/usr/bin/pactl", "set-source-mute ",   "0", "toggle",  NULL };
+static const char *light_up[] = {"/usr/bin/brightnessctl", "set", "+5%", NULL};
+static const char *light_down[] = {"/usr/bin/brightnessctl", "set", "5%-", NULL};
+
  // pactl 1 toggle
 
 
@@ -62,34 +69,35 @@ _NET_WM_NAME(UTF8_STRING) = "Picture-in-Picture"
 
      *   CLASS(STRING) = "Toolkit", "firefox"
 	 */
-	/* class                            instance    title       tags mask      iscentered  switchtotag  isfloating  issticky  cantfocus monitor */ 
-	{ "Org.gnome.Nautilus",             NULL,       NULL,       1 << 2,        0,          1,          0,          0,        0,         -1 },
-	{ "speedcrunch",         	        NULL,       NULL,            0,        1,          0,          1,          1,        0,         -1 },
-	{ "SpeedCrunch",         	        NULL,       NULL,            0,        1,          0,          1,          1,        0,         -1 },
-	{ "Gimp",                           NULL,       NULL,       1 << 3,        0,          1,          1,          0,        0,         -1 },
-	{ "jetbrains-pycharm",              NULL,       NULL,       1 << 1,        0,          1,          0,          0,        0,         -1 },
-	{ "Inkscape",                       NULL,       NULL,       1 << 3,        0,          1,          0,          0,        0,         -1 },
-	{ "firefox",                        NULL,       NULL,       1 << 8,        0,          1,          0,          0,        0,         -1 },
-	{ "firefox",                        "Toolkit",  NULL,            0,        0,          0,          1,          1,        1,         -1 },
-	{ "brave-browser-nightly",          NULL,       NULL,       1 << 8,        0,          1,          0,          0,        0,         -1 },
-	{ "Brave-browser-nightly",          NULL,       NULL,       1 << 8,        0,          1,          0,          0,        0,         -1 },
-	{ "Microsoft-edge-beta",            NULL,       NULL,       1 << 8,        0,          1,          0,          0,        0,         -1 },
-	{ "microsoft-edge-beta",            NULL,       NULL,       1 << 8,        0,          1,          0,          0,        0,         -1 },
-	{ "Microsoft-edge",                 NULL,       NULL,       1 << 8,        0,          1,          0,          0,        0,         -1 },
-	{ "microsoft-edge",                 NULL,       NULL,       1 << 8,        0,          1,          0,          0,        0,         -1 },
-	{ "Slack",                          NULL,       NULL,       1 << 7,        0,          1,          0,          0,        0,         -1 },
-	{ "whatsapp-nativefier-d40211",     NULL,       NULL,       1 << 7,        0,          1,          0,          0,        0,         -1 },
-	{ "obs",                            NULL,       NULL,       1 << 7,        0,          1,          0,          0,        0,         -1 },
-	{ "kdenlive",                       NULL,       NULL,       1 << 7,        0,          1,          0,          0,        0,         -1 },
-	{ "discord",                        NULL,       NULL,       1 << 7,        0,          1,          0,          0,        0,         -1 },
-	{ "Zoom",                           NULL,       NULL,       1 << 7,        0,          0,          0,          0,        0,         -1 },
-	{ "DBeaver",                        NULL,       NULL,       1 << 7,        0,          1,          0,          0,        0,         -1 },
-	{ "Thunderbird",                    NULL,       NULL,       1 << 6,        0,          1,          0,          0,        0,         -1 },
-	{ "Evolution",                      NULL,       NULL,       1 << 6,        0,          1,          0,          0,        0,         -1 },
-	{ "BlueMail",                       NULL,       NULL,       1 << 6,        0,          1,          0,          0,        0,         -1 },
-	{ "st",                             NULL,       NULL,       1 << 0,        0,          1,          0,          0,        0,         -1 },
-	{ "Notes",                          NULL,       "Notes",         0,        1,          0,          1,          1,        0,         -1 },
-	{ "NIDE",                           NULL,       NULL,  SCRATCHPAD_MASK,        1,          0,      0,          0,        0,         -1 },
+	/* class                            instance    title       tags mask      iscentered  switchtotag  isfloating  issticky  cantfocus ispermanent monitor */ 
+	{ "Org.gnome.Nautilus",             NULL,       NULL,       1 << 2,        0,          1,          0,          0,         0,        0,         -1 },
+	{ "speedcrunch",         	        NULL,       NULL,            0,        1,          0,          1,          1,         0,        0,         -1 },
+	{ "SpeedCrunch",         	        NULL,       NULL,            0,        1,          0,          1,          1,         0,        0,         -1 },
+	{ "Gimp",                           NULL,       NULL,       1 << 3,        0,          1,          1,          0,         0,        0,         -1 },
+	{ "jetbrains-pycharm",              NULL,       NULL,       1 << 1,        0,          1,          0,          0,         0,        0,         -1 },
+	{ "Insomnia",                       NULL,       NULL,       1 << 1,        0,          1,          0,          0,         0,        0,         -1 },
+	{ "Inkscape",                       NULL,       NULL,       1 << 3,        0,          1,          0,          0,         0,        0,         -1 },
+	{ "firefox",                        NULL,       NULL,       1 << 8,        0,          1,          0,          0,         0,        0,         -1 },
+	{ "firefox",                        "Toolkit",  NULL,            0,        0,          0,          1,          1,         1,        1,         -1 },
+	{ "brave-browser-nightly",          NULL,       NULL,       1 << 8,        0,          1,          0,          0,         0,        0,         -1 },
+	{ "Brave-browser-nightly",          NULL,       NULL,       1 << 8,        0,          1,          0,          0,         0,        0,         -1 },
+	{ "Microsoft-edge-beta",            NULL,       NULL,       1 << 8,        0,          1,          0,          0,         0,        0,         -1 },
+	{ "microsoft-edge-beta",            NULL,       NULL,       1 << 8,        0,          1,          0,          0,         0,        0,         -1 },
+	{ "Microsoft-edge",                 NULL,       NULL,       1 << 8,        0,          1,          0,          0,         0,        0,         -1 },
+	{ "microsoft-edge",                 NULL,       NULL,       1 << 8,        0,          1,          0,          0,         0,        0,         -1 },
+	{ "Slack",                          NULL,       NULL,       1 << 7,        0,          1,          0,          0,         0,        0,         -1 },
+	{ "whatsapp-nativefier-d40211",     NULL,       NULL,       1 << 7,        0,          1,          0,          0,         0,        0,         -1 },
+	{ "obs",                            NULL,       NULL,       1 << 7,        0,          1,          0,          0,         0,        0,         -1 },
+	{ "kdenlive",                       NULL,       NULL,       1 << 7,        0,          1,          0,          0,         0,        0,         -1 },
+	{ "discord",                        NULL,       NULL,       1 << 7,        1,          1,          0,          0,         0,        0,         -1 },
+	{ "Zoom",                           NULL,       NULL,       1 << 7,        0,          0,          0,          0,         0,        0,         -1 },
+	{ "DBeaver",                        NULL,       NULL,       1 << 7,        0,          1,          0,          0,         0,        0,         -1 },
+	{ "Thunderbird",                    NULL,       NULL,       1 << 6,        0,          1,          0,          0,         0,        0,         -1 },
+	{ "Evolution",                      NULL,       NULL,       1 << 6,        0,          1,          0,          0,         0,        0,         -1 },
+	{ "BlueMail",                       NULL,       NULL,       1 << 6,        0,          1,          0,          0,         0,        0,         -1 },
+	{ "st",                             NULL,       NULL,       1 << 0,        0,          1,          0,          0,         0,        0,         -1 },
+	{ "Notes",                          NULL,       "Notes",         0,        1,          0,          1,          1,         0,        0,         -1 },
+	{ "NIDE",                           NULL,       NULL,  SCRATCHPAD_MASK,     1,         0,          0,          0,         0,        0,         -1 },
 };
 
 /* window swallowing */
@@ -153,6 +161,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_l,          shiftview,      {.i = +1 } },
 	{ MODKEY,                       XK_space,      zoom,           {0} },
 	{ MODKEY,                       XK_Tab,        view,           {0} },
+	{ MODKEY|ShiftMask,             XK_Tab,        view,           {.ui = ~0 } },
 	{ MODKEY,                       XK_q,          killclient,     {0} },
 	{ MODKEY|ShiftMask,             XK_q,          quit,           {0} },
 	{ MODKEY|ShiftMask,             XK_w,          killunsel,      {0} },
@@ -199,6 +208,8 @@ static Key keys[] = {
 	{ 0,	XF86XK_AudioMute,		     spawn,		    {.v = mutevol } },
 	{ 0,	XF86XK_AudioRaiseVolume,	 spawn,		    {.v = upvol   } },
 	{ 0,	XF86XK_AudioMicMute,	     spawn,		    {.v = mic   } },
+    { 0,	XF86XK_MonBrightnessUp,		spawn,	        {.v = light_up} },
+	{ 0,	XF86XK_MonBrightnessDown,	spawn,	        {.v = light_down} },
 };
 
 /* button definitions */
