@@ -43,6 +43,10 @@ It allow you to have `Mod o` seperate layou pertag
 It allow you to have `Mod o` seperate layou pertag
 
 
+##### Client Indicator 
+Change how active client is shown on the status bar
+
+
 
 dwm is an extremely fast, small, and dynamic window manager for X.
 
