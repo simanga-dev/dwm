@@ -6,6 +6,9 @@ This patches let you go the next or previous tag using `Mod H` and `Mod L`
 ##### Hide Vacant Tags
 This patches let dwm to not draw tags without clietn int them
 
+##### Hide boreder 
+This patch hide bordes when viewing a winodw in full screen or when the is only window
+on a tag, make the window look nice
 
 
 
