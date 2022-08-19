@@ -30,6 +30,12 @@ center of the space provied
 ##### Added Pertag
 It allow you to have seperate layou pertag
 
+
+##### Kill allw unselect windows
+It allow you to have `Mod o` seperate layou pertag
+
+
+
 dwm is an extremely fast, small, and dynamic window manager for X.
 
 
