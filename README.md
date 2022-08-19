@@ -1,3 +1,7 @@
+
+# dwm - dynamic window manager
+
+
 ###  Included Patches
 
 ##### ShiftView
@@ -19,11 +23,13 @@ This patch let the window tittleto have a sepeate color configureateion
 so that it can be set alne
 
 ##### Center Title Patche
-This patch let the window name to be display on the 
+This patch let the window name to be display on the
 center of the space provied
 
-dwm - dynamic window manager
-============================
+
+##### Added Pertag
+It allow you to have seperate layou pertag
+
 dwm is an extremely fast, small, and dynamic window manager for X.
 
 
