@@ -83,6 +83,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_k,      				focusstack,     			{.i = -1 } },
 	{ MODKEY,                       XK_h,          			shiftview,      			{.i = -1 } },
 	{ MODKEY,                       XK_l,          			shiftview,      			{.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_o,          			killunsel,      			{0} },
 	// { MODKEY,                       XK_i,      			incnmaster,     			{.i = +1 } },
 	// { MODKEY,                       XK_d,      			ncnmaster,     				{.i = -1 } },
 	// { MODKEY,                       XK_h,      			setmfact,       			{.f = -0.05} },
