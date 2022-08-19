@@ -1,3 +1,11 @@
+###  Included Patches
+
+##### ShiftView
+This patches let you go the next or previous tag using `Mod H` and `Mod L`
+
+
+
+
 dwm - dynamic window manager
 ============================
 dwm is an extremely fast, small, and dynamic window manager for X.
