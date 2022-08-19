@@ -14,6 +14,10 @@ on a tag, make the window look nice
 Added Fake fullscreen patch, This patch add make let window occupy the full widow when 
 fullscreen instead of a fullscreen
 
+##### Title Color patch
+This patch let the window tittleto have a sepeate color configureateion 
+so that it can be set alne
+
 dwm - dynamic window manager
 ============================
 dwm is an extremely fast, small, and dynamic window manager for X.
