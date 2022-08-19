@@ -35,6 +35,14 @@ It allow you to have seperate layou pertag
 It allow you to have `Mod o` seperate layou pertag
 
 
+##### Grid Layout
+It allow you to have `Mod o` seperate layou pertag
+
+
+##### B Stack Layout
+It allow you to have `Mod o` seperate layou pertag
+
+
 
 dwm is an extremely fast, small, and dynamic window manager for X.
 
