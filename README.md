@@ -11,12 +11,16 @@ This patch hide bordes when viewing a winodw in full screen or when the is only 
 on a tag, make the window look nice
 
 ##### Fake fullscreen
-Added Fake fullscreen patch, This patch add make let window occupy the full widow when 
+Added Fake fullscreen patch, This patch add make let window occupy the full widow when
 fullscreen instead of a fullscreen
 
 ##### Title Color patch
-This patch let the window tittleto have a sepeate color configureateion 
+This patch let the window tittleto have a sepeate color configureateion
 so that it can be set alne
+
+##### Center Title Patche
+This patch let the window name to be display on the 
+center of the space provied
 
 dwm - dynamic window manager
 ============================
