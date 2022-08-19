@@ -830,8 +830,7 @@ int
 solitary(Client *c)
 {
 	return ((nexttiled(c->mon->clients) == c && !nexttiled(c->next))
-	    || &monocle == c->mon->lt[c->mon->sellt]->arrange)
-	    && !c->isfullscreen && !c->isfloating
+	    || &monocle == c->mon->lt[c->mon->sellt]->arrange) && !c->isfloating
 	    && NULL != c->mon->lt[c->mon->sellt]->arrange;
 }
 
