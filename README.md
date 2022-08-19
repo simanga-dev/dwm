@@ -43,8 +43,12 @@ It allow you to have `Mod o` seperate layou pertag
 It allow you to have `Mod o` seperate layou pertag
 
 
-##### Client Indicator 
+##### Client Indicator
 Change how active client is shown on the status bar
+
+
+##### Sticky Patch
+Stick a window to all the patch
 
 
 
