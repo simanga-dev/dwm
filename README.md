@@ -50,6 +50,9 @@ Change how active client is shown on the status bar
 ##### Sticky Patch
 Stick a window to all the patch
 
+##### Scrath pad Patch
+Stick a window to all the patch
+
 
 
 dwm is an extremely fast, small, and dynamic window manager for X.
