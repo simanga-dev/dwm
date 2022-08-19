@@ -3,6 +3,9 @@
 ##### ShiftView
 This patches let you go the next or previous tag using `Mod H` and `Mod L`
 
+##### Hide Vacant Tags
+This patches let dwm to not draw tags without clietn int them
+
 
 
 
