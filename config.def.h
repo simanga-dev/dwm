@@ -137,6 +137,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_q,          			quit,           			{0} },
 	{ MODKEY,                       XK_t,      				setlayout,      			{.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      				setlayout,      			{.v = &layouts[1]} },
+    { MODKEY|ShiftMask,             XK_f,          			unfloatvisible, 			{.v = &layouts[0]} },
 	{ MODKEY,                       XK_m,      				setlayout,      			{.v = &layouts[2]} },
 	{ MODKEY,                       XK_g,          			setlayout,      			{.v = &layouts[3]} },
 	{ MODKEY,                       XK_u,          			setlayout,      			{.v = &layouts[4]} },
