@@ -399,10 +399,15 @@ applyrules(Client *c)
 		XFree(ch.res_name);
 	if (c->tags != SCRATCHPAD_MASK)
 		c->tags = c->tags & TAGMASK ? c->tags & TAGMASK : c->mon->tagset[c->mon->seltags];
-	if (c->tags == SCRATCHPAD_MASK){
+
+	if (scratchpad_last_showed == selmon->sel)
+		scratchpad_hide();
+
+	if (c->tags == SCRATCHPAD_MASK ){
 		scratchpad_last_showed = c;
 		c -> tags = selmon->tagset[selmon->seltags];
 	}
+
 }
 
 int
@@ -2468,6 +2473,8 @@ swalmanage(Swallow *s, Window w, XWindowAttributes *wa)
 	swee->mon = swer->mon;
 	swee->oldbw = wa->border_width;
 	swee->bw = borderpx;
+	swee->canfocus = 1;
+
 	attach(swee);
 	attachstack(swee);
 	updatetitle(swee);
