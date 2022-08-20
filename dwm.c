@@ -362,6 +362,10 @@ applyrules(Client *c)
 		XFree(ch.res_name);
 	if (c->tags != SCRATCHPAD_MASK)
 		c->tags = c->tags & TAGMASK ? c->tags & TAGMASK : c->mon->tagset[c->mon->seltags];
+	if (c->tags == SCRATCHPAD_MASK){
+		scratchpad_last_showed = c;
+		c -> tags = selmon->tagset[selmon->seltags];
+	}
 }
 
 int
@@ -1196,8 +1200,10 @@ focusstack(const Arg *arg)
 {
 	Client *c = NULL, *i;
 
-	if (scratchpad_last_showed == selmon->sel)
+	if (scratchpad_last_showed == selmon->sel){
 		scratchpad_hide();
+		return;
+	}
 
 	if (!selmon->sel || (selmon->sel->isfullscreen && lockfullscreen))
 		return;
@@ -2292,10 +2298,10 @@ unmanage(Client *c, int destroyed)
 	focus(NULL);
 	updateclientlist();
 	arrange(m);
-	if (c->switchtotag) {
-		Arg a = { .ui = c->switchtotag };
-		view(&a);
-	}
+	// if (c->switchtotag) {
+	// 	Arg a = { .ui = c->switchtotag };
+	// 	view(&a);
+	// }
 }
 
 void
