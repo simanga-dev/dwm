@@ -30,9 +30,35 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	/* class      						instance    title       tags mask     iscentered	switchtotag   isfloating   issticky   canfocus    ispermanent   monitor */
+	{ "Org.gnome.Nautilus",             NULL,       NULL,       1 << 2,        0,          1,          0,          0,         1,        0,         -1 },
+	{ "speedcrunch",         	        NULL,       NULL,            0,        1,          0,          1,          1,         1,        0,         -1 },
+	{ "SpeedCrunch",         	        NULL,       NULL,            0,        1,          0,          1,          1,         1,        0,         -1 },
+	{ "Gimp",                           NULL,       NULL,       1 << 3,        0,          1,          1,          0,         1,        0,         -1 },
+	{ "jetbrains-pycharm",              NULL,       NULL,       1 << 1,        0,          1,          0,          0,         1,        0,         -1 },
+	{ "Insomnia",                       NULL,       NULL,       1 << 1,        0,          1,          0,          0,         1,        0,         -1 },
+	{ "Inkscape",                       NULL,       NULL,       1 << 3,        0,          1,          0,          0,         1,        0,         -1 },
+	{ "firefox",                        NULL,       NULL,       1 << 8,        0,          1,          0,          0,         1,        0,         -1 },
+	{ "firefox",                        "Toolkit",  NULL,            0,        0,          0,          1,          1,         0,        1,         -1 },
+	{ "brave-browser-nightly",          NULL,       NULL,       1 << 8,        0,          1,          0,          0,         1,        0,         -1 },
+	{ "Brave-browser-nightly",          NULL,       NULL,       1 << 8,        0,          1,          0,          0,         1,        0,         -1 },
+	{ "Microsoft-edge-beta",            NULL,       NULL,       1 << 8,        0,          1,          0,          0,         1,        0,         -1 },
+	{ "microsoft-edge-beta",            NULL,       NULL,       1 << 8,        0,          1,          0,          0,         1,        0,         -1 },
+	{ "Microsoft-edge",                 NULL,       NULL,       1 << 8,        0,          1,          0,          0,         1,        0,         -1 },
+	{ "microsoft-edge",                 NULL,       NULL,       1 << 8,        0,          1,          0,          0,         1,        0,         -1 },
+	{ "Slack",                          NULL,       NULL,       1 << 7,        0,          1,          0,          0,         1,        0,         -1 },
+	{ "whatsapp-nativefier-d40211",     NULL,       NULL,       1 << 7,        0,          1,          0,          0,         1,        0,         -1 },
+	{ "obs",                            NULL,       NULL,       1 << 7,        0,          1,          0,          0,         1,        0,         -1 },
+	{ "kdenlive",                       NULL,       NULL,       1 << 7,        0,          1,          0,          0,         1,        0,         -1 },
+	{ "discord",                        NULL,       NULL,       1 << 7,        1,          1,          0,          0,         1,        0,         -1 },
+	{ "Zoom",                           NULL,       NULL,       1 << 7,        0,          0,          0,          0,         1,        0,         -1 },
+	{ "DBeaver",                        NULL,       NULL,       1 << 7,        0,          1,          0,          0,         1,        0,         -1 },
+	{ "Thunderbird",                    NULL,       NULL,       1 << 6,        0,          1,          0,          0,         1,        0,         -1 },
+	{ "Evolution",                      NULL,       NULL,       1 << 6,        0,          1,          0,          0,         1,        0,         -1 },
+	{ "BlueMail",                       NULL,       NULL,       1 << 6,        0,          1,          0,          0,         1,        0,         -1 },
+	{ "st",                             NULL,       NULL,       1 << 0,        0,          1,          0,          0,         1,        0,         -1 },
+	{ "Notes",                          NULL,       "Notes",         0,        1,          0,          1,          1,         1,        0,         -1 },
+	{ "NIDE",                           NULL,       NULL,  SCRATCHPAD_MASK,     1,         0,          0,          0,         1,        0,         -1 },
 };
 
 /* layout(s) */

@@ -54,6 +54,10 @@ Stick a window to all the patch
 Stick a window to all the patch
 
 
+##### Rule confiuration
+Description comming soon
+
+
 
 dwm is an extremely fast, small, and dynamic window manager for X.
 
