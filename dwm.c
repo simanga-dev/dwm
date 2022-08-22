@@ -202,6 +202,8 @@ static void enternotify(XEvent *e);
 static void expose(XEvent *e);
 static void focus(Client *c);
 static void focusin(XEvent *e);
+static void focusurgent(const Arg *arg);
+static void resetcanfocusfloating();
 static void focusmon(const Arg *arg);
 static void focusstack(const Arg *arg);
 static Atom getatomprop(Client *c, Atom prop);
@@ -269,6 +271,7 @@ static void togglefloating(const Arg *arg);
 static void toggletag(const Arg *arg);
 static void toggleview(const Arg *arg);
 static void togglesticky(const Arg *arg);
+static void togglecanfocusfloating(const Arg *arg);
 static void unfocus(Client *c, int setfocus);
 static void unmanage(Client *c, int destroyed);
 static void unmapnotify(XEvent *e);
@@ -1174,6 +1177,70 @@ solitary(Client *c)
 	return ((nexttiled(c->mon->clients) == c && !nexttiled(c->next))
 	    || &monocle == c->mon->lt[c->mon->sellt]->arrange) && !c->isfloating
 	    && NULL != c->mon->lt[c->mon->sellt]->arrange;
+}
+
+static void
+focusurgent(const Arg *arg) {
+	Client *c;
+	int i;
+	for(c=selmon->clients; c && !c->isurgent; c=c->next);
+	if(c) {
+		for(i=0; i < LENGTH(tags) && !((1 << i) & c->tags); i++);
+		if(i < LENGTH(tags)) {
+			const Arg a = {.ui = 1 << i};
+			view(&a);
+			focus(c);
+		}
+	}
+}
+
+
+void
+resetcanfocusfloating()
+{
+	unsigned int i, n;
+	Client *c;
+
+	for (n = 0, c = selmon->clients; c; c = c->next, n++);
+	if (n == 0)
+		return;
+
+	for (i = 0, c = selmon->clients; c; c = c->next, i++)
+    if (c->isfloating)
+      c->canfocus = 1;
+
+	arrange(selmon);
+}
+
+void
+togglecanfocusfloating(const Arg *arg)
+{
+	unsigned int n;
+	Client *c, *cf = NULL;
+
+  if (!selmon->sel)
+      return;
+
+  for (c = selmon->clients; c; c = c->next)
+      if (c->canfocus == 0) {
+          cf = c;
+      }
+
+  if (cf) {
+      resetcanfocusfloating();
+      focus(cf);
+  } else {
+    for (n = 0, c = selmon->clients; c; c = c->next)
+        if (c->isfloating && (c != scratchpad_last_showed || c->tags != SCRATCHPAD_MASK))
+            c->canfocus = !c->canfocus;
+        else
+            n++;
+
+    if (n && selmon->sel->isfloating) {
+        c = nexttiled(selmon->clients);
+        focus(c);
+    }
+  }
 }
 
 
@@ -2806,8 +2873,13 @@ unfocus(Client *c, int setfocus)
 void
 unmanage(Client *c, int destroyed)
 {
+	// const char *class, *instance;
+	// const char x[2] = "st";
 	Monitor *m = c->mon;
 	XWindowChanges wc;
+	XClassHint ch = { NULL, NULL };
+	// XGetClassHint(dpy, c->win, &ch);
+	// class    = ch.res_class ? ch.res_class : broken;
 
 	/* Remove all swallow instances targeting client. */
 	swalunreg(c);
@@ -2833,10 +2905,12 @@ unmanage(Client *c, int destroyed)
 	focus(NULL);
 	updateclientlist();
 	arrange(m);
-	// if (c->switchtotag) {
-	// 	Arg a = { .ui = c->switchtotag };
-	// 	view(&a);
-	// }
+  //   if (strstr(class, x)){
+		// if (c->switchtotag) {
+		// 	Arg a = { .ui = c->switchtotag };
+		// 	view(&a);
+		// }
+  //   }
 }
 
 void
