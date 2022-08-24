@@ -94,7 +94,7 @@ struct Client {
 	int bw, oldbw;
 	unsigned int tags;
 	unsigned int switchtotag;
-	int isfixed, ispermanent, isfloating, canfocus, isurgent, neverfocus, oldstate, isfullscreen, issticky, iscentered;
+	int isfixed, ispermanent, isalwaysontop, isfloating, canfocus, isurgent, neverfocus, oldstate, isfullscreen, issticky, iscentered;
 	Client *next;
 	Client *snext;
 	Client *swallowedby;
@@ -150,6 +150,7 @@ typedef struct {
 	int issticky;
     int canfocus;
 	int ispermanent;
+	int	isalwaysontop;
 	int monitor;
 } Rule;
 
@@ -250,6 +251,7 @@ static void setup(void);
 static void seturgent(Client *c, int urg);
 static void showhide(Client *c);
 static void sigchld(int unused);
+static void togglealwaysontop(const Arg *arg);
 static void unfloatvisible(const Arg *arg);
 static int solitary(Client *c);
 static void spawn(const Arg *arg);
@@ -370,6 +372,7 @@ applyrules(Client *c)
 	c->ispermanent = 0;
 	c->tags = 0;
     c->canfocus = 1;
+    c->isalwaysontop = 0;
 	XGetClassHint(dpy, c->win, &ch);
 	class    = ch.res_class ? ch.res_class : broken;
 	instance = ch.res_name  ? ch.res_name  : broken;
@@ -386,6 +389,7 @@ applyrules(Client *c)
 			c->isfloating = r->isfloating;
 			c->issticky = r->issticky;
             c->canfocus = r->canfocus;
+            c->isalwaysontop = r->isalwaysontop;
 			c->tags |= r->tags;
 			for (m = mons; m && m->num != r->monitor; m = m->next);
 			if (m)
@@ -1012,9 +1016,12 @@ drawbar(Monitor *m)
 			drw_setscheme(drw, scheme[m == selmon ? SchemeTitle : SchemeNorm]);
 			tlpad = MAX((m->ww - ((int)TEXTW(m->sel->name) - lrpad)) / 2 - x, lrpad / 2);
 			drw_text(drw, x, 0, w, bh, tlpad, m->sel->name, 0);
-			if (m->sel->isfloating)
-				drw_rect(drw, x + boxs + tlpad - lrpad / 2, boxs,
-					boxw, boxw, m->sel->isfixed, 0);
+			if (m->sel->isfloating) {
+					drw_rect(drw, x + boxs + tlpad - lrpad / 2, boxs,
+									boxw, boxw, m->sel->isfixed, 0);
+				if (m->sel->isalwaysontop)
+					drw_rect(drw, x + boxs, bh - boxw, boxw, boxw, 0, 0);
+			}
 			if (m->sel->issticky)
 				drw_polygon(drw, x + boxs, m->sel->isfloating ? boxs * 2 + boxw : boxs, stickyiconbb.x, stickyiconbb.y, boxw, boxw * stickyiconbb.y / stickyiconbb.x, stickyicon, LENGTH(stickyicon), Nonconvex, m->sel->tags & m->tagset[m->seltags]);
 		} else {
@@ -1231,7 +1238,7 @@ togglecanfocusfloating(const Arg *arg)
       focus(cf);
   } else {
     for (n = 0, c = selmon->clients; c; c = c->next)
-        if (c->isfloating && (c != scratchpad_last_showed || c->tags != SCRATCHPAD_MASK))
+        if (c->isfloating && c != scratchpad_last_showed && c->tags != SCRATCHPAD_MASK)
             c->canfocus = !c->canfocus;
         else
             n++;
@@ -1999,6 +2006,17 @@ restack(Monitor *m)
 		return;
 	if (m->sel->isfloating || !m->lt[m->sellt]->arrange)
 		XRaiseWindow(dpy, m->sel->win);
+
+	/* raise the aot window */
+	for(Monitor *m_search = mons; m_search; m_search = m_search->next){
+		for(c = m_search->clients; c; c = c->next){
+			if(c->isalwaysontop){
+				XRaiseWindow(dpy, c->win);
+				break;
+			}
+		}
+	}
+
 	if (m->lt[m->sellt]->arrange) {
 		wc.stack_mode = Below;
 		wc.sibling = m->barwin;
@@ -2794,7 +2812,32 @@ togglefloating(const Arg *arg)
 	if (selmon->sel->isfloating)
 		resize(selmon->sel, selmon->sel->x, selmon->sel->y,
 			selmon->sel->w, selmon->sel->h, 0);
+	else
+		selmon->sel->isalwaysontop = 0; /* disabled, turn this off too */
 	arrange(selmon);
+}
+
+void
+togglealwaysontop(const Arg *arg)
+{
+	if (!selmon->sel)
+		return;
+	if (selmon->sel->isfullscreen)
+		return;
+
+	if(selmon->sel->isalwaysontop){
+		selmon->sel->isalwaysontop = 0;
+	}else{
+		/* disable others */
+		for(Monitor *m = mons; m; m = m->next)
+			for(Client *c = m->clients; c; c = c->next)
+				c->isalwaysontop = 0;
+
+		/* turn on, make it float too */
+		selmon->sel->isfloating = 1;
+		selmon->sel->isalwaysontop = 1;
+	}
+
 }
 
 void
