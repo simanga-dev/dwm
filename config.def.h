@@ -12,11 +12,11 @@ static const char col_gray1[]       = "#21262d";
 static const char col_gray2[]       = "#21262d";
 static const char col_gray3[]       = "#a9b1d6";
 static const char col_gray4[]       = "#c0caf5";
-static const char col_cyan[]        = "#005577";
+static const char col_cyan[]        = "#d18616";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
+	[SchemeSel]  = { col_cyan, col_gray1,  col_cyan  },
 	[SchemeTitle]  = { col_gray4, col_gray1,  col_gray2  },
 };
 
@@ -33,10 +33,12 @@ static const Rule rules[] = {
 	 */
 	/* class      						instance    title       tags mask      iscentered	switchtotag   	isfloating   	issticky   		canfocus    ispermanent   isalwaystop    monitor */
 	{ "Org.gnome.Nautilus",             NULL,       NULL,       1 << 2,        0,           1,          	0,         	 	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "org.gnome.Nautilus",             NULL,       NULL,       1 << 2,        0,           1,          	0,         	 	0,         		1,        	0,         	  0,         	  	-1 },
 	{ "speedcrunch",         	        NULL,       NULL,            0,        1,           0,          	1,          	1,         		1,        	0,         	  0,         	  	-1 },
 	{ "SpeedCrunch",         	        NULL,       NULL,            0,        1,           0,          	1,          	1,         		1,        	0,         	  0,         	  	-1 },
 	{ "Gimp",                           NULL,       NULL,       1 << 3,        0,           1,          	1,          	0,         		1,        	0,         	  0,         	  	-1 },
 	{ "jetbrains-pycharm",              NULL,       NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "Code",                           NULL,       NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
 	{ "Insomnia",                       NULL,       NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
 	{ "Inkscape",                       NULL,       NULL,       1 << 3,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
 	{ "firefox",                        NULL,       NULL,       1 << 8,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
@@ -48,6 +50,7 @@ static const Rule rules[] = {
 	{ "Microsoft-edge",                 NULL,       NULL,       1 << 8,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
 	{ "microsoft-edge",                 NULL,       NULL,       1 << 8,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
 	{ "Slack",                          NULL,       NULL,       1 << 7,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "notion-app",                     NULL,       NULL,       1 << 8,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
 	{ "whatsapp-nativefier-d40211",     NULL,       NULL,       1 << 7,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
 	{ "obs",                            NULL,       NULL,       1 << 7,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
 	{ "kdenlive",                       NULL,       NULL,       1 << 7,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
@@ -55,6 +58,7 @@ static const Rule rules[] = {
 	{ "Zoom",                           NULL,       NULL,       1 << 7,        0,           0,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
 	{ "DBeaver",                        NULL,       NULL,       1 << 7,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
 	{ "Thunderbird",                    NULL,       NULL,       1 << 6,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "thunderbird",                    NULL,       NULL,       1 << 6,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
 	{ "Evolution",                      NULL,       NULL,       1 << 6,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
 	{ "BlueMail",                       NULL,       NULL,       1 << 6,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
 	{ "st",                             NULL,       NULL,       1 << 0,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
@@ -69,14 +73,14 @@ static const char swalsymbol[] = "[</>]";
 
 
 /* layout(s) */
-static const float mfact     = 0.60; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.50; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 0; /* 1 will force focus on the fullscreen window */
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
+	{ "=[]",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
 	{ "###",      grid },
@@ -130,17 +134,18 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_o,          			killunsel,      			{0} },
 	{ MODKEY,                       XK_minus, 				scratchpad_show, 			{0} },
 	{ MODKEY|ShiftMask,             XK_minus, 				scratchpad_hide, 			{0} },
-	{ MODKEY,                       XK_equal,				scratchpad_remove,			{0} },
+	{ MODKEY|ShiftMask,             XK_equal,				scratchpad_remove,			{0} },
 	{ MODKEY,                       XK_x,      				swalstopsel,    			{0} },
 	{ MODKEY,             			XK_s,  					togglesticky, 				{0} },
 	{ MODKEY,                       XK_z,           		togglecanfocusfloating,    	{0} },
 	// { MODKEY,                       XK_i,      			incnmaster,     			{.i = +1 } },
 	// { MODKEY,                       XK_d,      			ncnmaster,     				{.i = -1 } },
-	// { MODKEY,                       XK_h,      			setmfact,       			{.f = -0.05} },
-	// { MODKEY,                       XK_l,      			setmfact,       			{.f = +0.05} },
+	{ MODKEY|ShiftMask,             XK_k,      			    setmfact,       			{.f = -0.05} },
+	{ MODKEY|ShiftMask,             XK_j,      			    setmfact,       			{.f = +0.05} },
 	{ MODKEY,                       XK_space, 				zoom,           			{0} },
 	{ MODKEY|ShiftMask,             XK_space,  				togglefloating, 			{0} },
 	{ MODKEY|ShiftMask,             XK_t,  					togglealwaysontop, 			{0} },
+	{ MODKEY,                       XK_v,          			winview,        			{0} },
 	{ MODKEY,                       XK_Tab,    				view,           			{0} },
 	{ MODKEY,             			XK_q,      				killclient,     			{0} },
 	{ MODKEY|ShiftMask,             XK_q,          			quit,           			{0} },
