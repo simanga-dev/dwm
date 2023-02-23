@@ -6,18 +6,28 @@ static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "JetBrainsMono-Regular:size=11" };
+static const char *fonts[]          = { "JetBrainsMono-Regular:size=12" };
 static const char dmenufont[]       = "JetBrainsMono-Regular:size=11";
 static const char col_gray1[]       = "#21262d";
 static const char col_gray2[]       = "#21262d";
 static const char col_gray3[]       = "#a9b1d6";
 static const char col_gray4[]       = "#c0caf5";
 static const char col_cyan[]        = "#d18616";
+static const unsigned int baralpha = 0xd0;
+static const unsigned int borderalpha = OPAQUE;
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
 	[SchemeSel]  = { col_cyan, col_gray1,  col_cyan  },
 	[SchemeTitle]  = { col_gray4, col_gray1,  col_gray2  },
+};
+
+
+static const unsigned int alphas[][3]      = {
+	/*               fg      bg        border     */
+	[SchemeNorm] = { OPAQUE, baralpha, borderalpha },
+	[SchemeSel]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeTitle]  = { OPAQUE, baralpha, borderalpha },
 };
 
 static const XPoint stickyicon[]    = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0} }; /* represents the icon as an array of vertices */
@@ -26,16 +36,18 @@ static const XPoint stickyiconbb    = {4,8};	/* defines the bottom right corner 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
+// "spotify", "Spotify"
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      						instance    title       tags mask      iscentered	switchtotag   	isfloating   	issticky   		canfocus    ispermanent   isalwaystop    monitor */
-	{ "Org.gnome.Nautilus",             NULL,       NULL,       1 << 2,        0,           1,          	0,         	 	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "org.gnome.Nautilus",             NULL,       NULL,       1 << 2,        0,           1,          	0,         	 	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "speedcrunch",         	        NULL,       NULL,            0,        1,           0,          	1,          	1,         		1,        	0,         	  0,         	  	-1 },
-	{ "SpeedCrunch",         	        NULL,       NULL,            0,        1,           0,          	1,          	1,         		1,        	0,         	  0,         	  	-1 },
+	/* class      						          instance    title       tags mask      iscentered	switchtotag   	isfloating   	issticky   		canfocus    ispermanent   isalwaystop    monitor */
+	{ "Nemo",                           NULL,       NULL,       1 << 2,        0,           1,          	0,         	 	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "Spotify",                        NULL,       NULL,       1 << 1,        0,           1,          	0,         	 	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "spotify",                        NULL,       NULL,       1 << 1,        0,           1,          	0,         	 	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "speedcrunch",         	          NULL,       NULL,            0,        1,           0,          	1,          	1,         		1,        	0,         	  0,         	  	-1 },
+	{ "SpeedCrunch",         	          NULL,       NULL,            0,        1,           0,          	1,          	1,         		1,        	0,         	  0,         	  	-1 },
 	{ "Gimp",                           NULL,       NULL,       1 << 3,        0,           1,          	1,          	0,         		1,        	0,         	  0,         	  	-1 },
 	{ "jetbrains-pycharm",              NULL,       NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
 	{ "Code",                           NULL,       NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
@@ -73,14 +85,14 @@ static const char swalsymbol[] = "[</>]";
 
 
 /* layout(s) */
-static const float mfact     = 0.50; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 0; /* 1 will force focus on the fullscreen window */
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "=[]",      tile },    /* first entry is default */
+	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
 	{ "###",      grid },
@@ -123,56 +135,56 @@ static const char *btn_next[] = {"/usr/bin/mpc", "next", NULL, NULL};
 static Key keys[] = {
 	/* modifier                     key        				function        			argument */
 	{ MODKEY,                       XK_p,      				spawn,          			{.v = dmenucmd } },
-	{ MODKEY,             			XK_Return, 				spawn,          			{.v = termcmd } },
-	{ MODKEY|ShiftMask,             XK_l,          			spawn,          			{.v = lockcmd } },
-	{ MODKEY,                       XK_e,      				focusurgent,         		{0} },
+	{ MODKEY,             			    XK_Return, 				spawn,          			{.v = termcmd } } ,
+	{ MODKEY|ShiftMask,             XK_l,          		spawn,          			{.v = lockcmd } },
+	{ MODKEY,                       XK_e,      				focusurgent,         	{0} },
 	{ MODKEY,                       XK_b,      				togglebar,      			{0} },
 	{ MODKEY,                       XK_j,      				focusstack,     			{.i = +1 } },
 	{ MODKEY,                       XK_k,      				focusstack,     			{.i = -1 } },
-	{ MODKEY,                       XK_h,          			shiftview,      			{.i = -1 } },
-	{ MODKEY,                       XK_l,          			shiftview,      			{.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_o,          			killunsel,      			{0} },
+	{ MODKEY,                       XK_h,          		shiftview,      			{.i = -1 } },
+	{ MODKEY,                       XK_l,          		shiftview,      			{.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_o,          		killunsel,      			{0} },
 	{ MODKEY,                       XK_minus, 				scratchpad_show, 			{0} },
 	{ MODKEY|ShiftMask,             XK_minus, 				scratchpad_hide, 			{0} },
-	{ MODKEY|ShiftMask,             XK_equal,				scratchpad_remove,			{0} },
+	{ MODKEY|ShiftMask,             XK_equal,				  scratchpad_remove,		{0} },
 	{ MODKEY,                       XK_x,      				swalstopsel,    			{0} },
-	{ MODKEY,             			XK_s,  					togglesticky, 				{0} },
-	{ MODKEY,                       XK_z,           		togglecanfocusfloating,    	{0} },
-	// { MODKEY,                       XK_i,      			incnmaster,     			{.i = +1 } },
-	// { MODKEY,                       XK_d,      			ncnmaster,     				{.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_k,      			    setmfact,       			{.f = -0.05} },
-	{ MODKEY|ShiftMask,             XK_j,      			    setmfact,       			{.f = +0.05} },
+	{ MODKEY,             			    XK_s,  					  togglesticky, 				{0} },
+	{ MODKEY,                       XK_z,           	togglecanfocusfloating,    	{0} },
+	{ MODKEY,                       XK_y,      			  incnmaster,     			{.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_y,      			  incnmaster,     			{.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_k,      			  setmfact,       			{.f = -0.05} },
+	{ MODKEY|ShiftMask,             XK_j,      			  setmfact,       			{.f = +0.05} },
 	{ MODKEY,                       XK_space, 				zoom,           			{0} },
 	{ MODKEY|ShiftMask,             XK_space,  				togglefloating, 			{0} },
-	{ MODKEY|ShiftMask,             XK_t,  					togglealwaysontop, 			{0} },
-	{ MODKEY,                       XK_v,          			winview,        			{0} },
+	{ MODKEY|ShiftMask,             XK_t,  					  togglealwaysontop, 		{0} },
+	{ MODKEY,                       XK_v,          		winview,        			{0} },
 	{ MODKEY,                       XK_Tab,    				view,           			{0} },
-	{ MODKEY,             			XK_q,      				killclient,     			{0} },
-	{ MODKEY|ShiftMask,             XK_q,          			quit,           			{0} },
+	{ MODKEY,             			    XK_q,      				killclient,     			{0} },
+	{ MODKEY|ShiftMask,             XK_q,          		quit,           			{0} },
 	{ MODKEY,                       XK_t,      				setlayout,      			{.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      				setlayout,      			{.v = &layouts[1]} },
-    { MODKEY|ShiftMask,             XK_f,          			unfloatvisible, 			{.v = &layouts[0]} },
+    { MODKEY|ShiftMask,           XK_f,          		unfloatvisible, 			{.v = &layouts[0]} },
 	{ MODKEY,                       XK_m,      				setlayout,      			{.v = &layouts[2]} },
-	{ MODKEY,                       XK_g,          			setlayout,      			{.v = &layouts[3]} },
-	{ MODKEY,                       XK_u,          			setlayout,      			{.v = &layouts[4]} },
-	{ MODKEY|ShiftMask,             XK_u,          			setlayout,      			{.v = &layouts[5]} },
-	// { MODKEY|ShiftMask,             XK_space,  				togglesticky, 				{0} },
+	{ MODKEY,                       XK_g,          		setlayout,      			{.v = &layouts[3]} },
+	{ MODKEY,                       XK_u,          		setlayout,      			{.v = &layouts[4]} },
+	{ MODKEY|ShiftMask,             XK_u,          		setlayout,      			{.v = &layouts[5]} },
+	// { MODKEY|ShiftMask,          XK_space,  				togglesticky, 				{0} },
 	{ MODKEY,                       XK_0,      				view,           			{.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      				tag,            			{.ui = ~0 } },
-	{ MODKEY,                       XK_bracketleft,  		focusmon,       			{.i = -1 } },
-	{ MODKEY,                       XK_bracketleft, 		focusmon,       			{.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_bracketleft,  		tagmon,         			{.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_bracketleft, 		tagmon,         			{.i = +1 } },
-	{ 0,    						XF86XK_AudioLowerVolume,	 spawn,		    		{.v = downvol } },
-	{ 0,							XF86XK_AudioMute,		     spawn,		    		{.v = mutevol } },
-	{ 0,							XF86XK_AudioRaiseVolume,	 spawn,		    		{.v = upvol   } },
-	{ 0,							XF86XK_AudioMicMute,	     spawn,		    		{.v = mic   } },
-    { 0,							XF86XK_MonBrightnessUp,		 spawn,	        		{.v = light_up} },
-	{ 0,							XF86XK_MonBrightnessDown,	 spawn,	        		{.v = light_down} },
-	{ 0,							XF86XK_AudioPrev,			 spawn,	        		{.v = btn_prev} },
-	{ 0,							XF86XK_AudioPause,			 spawn,	        		{.v = btn_pause} },
-	{ 0,							XF86XK_AudioPlay,			 spawn,	        		{.v = btn_toggle} },
-	{ 0,							XF86XK_AudioNext,			 spawn,	        		{.v = btn_next} },
+	{ MODKEY,                       XK_bracketleft,  	focusmon,       			{.i = -1 } },
+	{ MODKEY,                       XK_bracketleft, 	focusmon,       			{.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_bracketleft,  	tagmon,         			{.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_bracketleft, 	tagmon,         			{.i = +1 } },
+	{ 0,    					XF86XK_AudioLowerVolume,	      spawn,		    		    {.v = downvol } },
+	{ 0,							XF86XK_AudioMute,		            spawn,		    		    {.v = mutevol } },
+	{ 0,							XF86XK_AudioRaiseVolume,	      spawn,		    		    {.v = upvol   } },
+	{ 0,							XF86XK_AudioMicMute,	          spawn,		    		    {.v = mic   } },
+  { 0,							XF86XK_MonBrightnessUp,		      spawn,	        		  {.v = light_up} },
+	{ 0,							XF86XK_MonBrightnessDown,	      spawn,	        		  {.v = light_down} },
+	{ 0,							XF86XK_AudioPrev,			          spawn,	        		  {.v = btn_prev} },
+	{ 0,							XF86XK_AudioPause,			        spawn,	        		  {.v = btn_pause} },
+	{ 0,							XF86XK_AudioPlay,			          spawn,	        		  {.v = btn_toggle} },
+	{ 0,							XF86XK_AudioNext,			          spawn,	        		  {.v = btn_next} },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
