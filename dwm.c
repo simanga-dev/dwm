@@ -3247,6 +3247,12 @@ view(const Arg *arg)
 	int i;
 	unsigned int tmptag;
 
+
+	if (scratchpad_last_showed == selmon->sel){
+		scratchpad_hide();
+		return;
+	}
+
 	if ((arg->ui & TAGMASK) == selmon->tagset[selmon->seltags])
 		return;
 	selmon->seltags ^= 1; /* toggle sel tagset */
