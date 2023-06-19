@@ -2088,7 +2088,7 @@ scratchpad_hide()
 	if (selmon -> sel)
 	{
 		selmon -> sel -> tags = SCRATCHPAD_MASK;
-		selmon -> sel -> isfloating = 1;
+		// selmon -> sel -> isfloating = 1;
 		resize(selmon->sel, selmon->wx, selmon->wy,
 				selmon->ww - 2 * selmon->sel->bw,
 				selmon->wh - 2 * selmon->sel->bw, 0);
