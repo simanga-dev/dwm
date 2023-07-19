@@ -18,7 +18,7 @@ static const unsigned int borderalpha = OPAQUE;
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_cyan, col_gray1,  col_cyan  },
+	[SchemeSel]  = { col_gray1, col_gray3,  col_cyan  },
 	[SchemeTitle]  = { col_gray4, col_gray1,  col_gray2  },
 };
 
@@ -86,7 +86,7 @@ static const char swalsymbol[] = "[</>]";
 
 
 /* layout(s) */
-static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.60; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 0; /* 1 will force focus on the fullscreen window */
@@ -145,9 +145,9 @@ static Key keys[] = {
 	{ MODKEY,                       XK_h,          		shiftview,      			{.i = -1 } },
 	{ MODKEY,                       XK_l,          		shiftview,      			{.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_o,          		killunsel,      			{0} },
-	{ MODKEY,                       XK_backslash, 				scratchpad_show, 			{0} },
-	{ MODKEY|ShiftMask,             XK_backslash, 				scratchpad_hide, 			{0} },
-	{ MODKEY|ShiftMask,             XK_BackSpace,				  scratchpad_remove,		{0} },
+	{ MODKEY,                       XK_backslash, 		scratchpad_show, 			{0} },
+	{ MODKEY|ShiftMask,             XK_backslash, 		scratchpad_hide, 			{0} },
+	{ MODKEY|ShiftMask,             XK_BackSpace,			scratchpad_remove,		{0} },
 	{ MODKEY,                       XK_x,      				swalstopsel,    			{0} },
 	{ MODKEY,             			    XK_s,  					  togglesticky, 				{0} },
 	{ MODKEY,                       XK_z,           	togglecanfocusfloating,    	{0} },
@@ -164,7 +164,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_q,          		quit,           			{0} },
 	{ MODKEY,                       XK_t,      				setlayout,      			{.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      				setlayout,      			{.v = &layouts[1]} },
-    { MODKEY|ShiftMask,           XK_f,          		unfloatvisible, 			{.v = &layouts[5]} },
+  { MODKEY|ShiftMask,             XK_f,          		unfloatvisible, 			{.v = &layouts[5]} },
 	{ MODKEY,                       XK_m,      				setlayout,      			{.v = &layouts[2]} },
 	{ MODKEY,                       XK_g,          		setlayout,      			{.v = &layouts[3]} },
 	{ MODKEY,                       XK_u,          		setlayout,      			{.v = &layouts[4]} },
@@ -176,6 +176,14 @@ static Key keys[] = {
 	{ MODKEY,                       XK_bracketleft, 	focusmon,       			{.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_bracketleft,  	tagmon,         			{.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_bracketleft, 	tagmon,         			{.i = +1 } },
+	{ MODKEY|ControlMask,                     XK_j,          moveresize,           {.v = "0x 25y 0w 0h" } },
+	{ MODKEY|ControlMask,                      XK_k,            moveresize,           {.v = "0x -25y 0w 0h" } },
+	{ MODKEY|ControlMask,                       XK_l,         moveresize,           {.v = "25x 0y 0w 0h" } },
+	{ MODKEY|ControlMask,                       XK_h,          moveresize,           {.v = "-25x 0y 0w 0h" } },
+	{ MODKEY|ControlMask|ShiftMask,             XK_j,          moveresize,           {.v = "0x 0y 0w 25h" } },
+	{ MODKEY|ControlMask|ShiftMask,             XK_k,            moveresize,           {.v = "0x 0y 0w -25h" } },
+	{ MODKEY|ControlMask|ShiftMask,             XK_l,         moveresize,           {.v = "0x 0y 25w 0h" } },
+	{ MODKEY|ControlMask|ShiftMask,             XK_h,          moveresize,           {.v = "0x 0y -25w 0h" } },
 	{ 0,    					XF86XK_AudioLowerVolume,	      spawn,		    		    {.v = downvol } },
 	{ 0,							XF86XK_AudioMute,		            spawn,		    		    {.v = mutevol } },
 	{ 0,							XF86XK_AudioRaiseVolume,	      spawn,		    		    {.v = upvol   } },
