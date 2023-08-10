@@ -70,7 +70,8 @@ static const Rule rules[] = {
 	{ "Zoom",                           NULL,       NULL,       1 << 7,        0,           0,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
 	{ "DBeaver",                        NULL,       NULL,       1 << 7,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
 	{ "Thunderbird",                    NULL,       NULL,       1 << 6,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "thunderbird",                    NULL,       NULL,       1 << 6,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ NULL,                             "Mail",       NULL,     1 << 6,        1,           1,          	1,          	0,         		1,        	0,         	  1,         	  	-1 },
+	{ "thunderbird",                    "Mail",       NULL,       1 << 6,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
 	{ "Evolution",                      NULL,       NULL,       1 << 6,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
 	{ "BlueMail",                       NULL,       NULL,       1 << 6,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
 	{ "st",                             NULL,       NULL,       1 << 0,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
@@ -114,7 +115,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", NULL  };
+static const char *dmenucmd[] = { "rofi", "-show", "run"  };
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *lockcmd[]  = { "slock", NULL };
 
@@ -125,11 +126,18 @@ static const char *mic[] = { "/usr/bin/pactl", "set-source-mute ",   "0", "toggl
 
 static const char *light_up[] = {"/usr/bin/brightnessctl", "set", "+5%", NULL};
 static const char *light_down[] = {"/usr/bin/brightnessctl", "set", "5%-", NULL};
-static const char *btn_prev[] = {"/usr/bin/spt", "playback", "-p", NULL};
-static const char *btn_pause[] = {"/usr/bin/spt", "pause", "-t", NULL};
+
+static const char *btn_prev[] = {"/usr/bin/mpc", "prev", NULL, NULL};
+static const char *btn_pause[] = {"/usr/bin/mpc", "pause", NULL, NULL};
 // static const char *btn_play[] = {"/usr/bin/mpc", "play", NULL, NULL};
-static const char *btn_toggle[] = {"/usr/bin/spt", "playback", "-t", NULL};
-static const char *btn_next[] = {"/usr/bin/spt", "playback", "-n", NULL};
+static const char *btn_toggle[] = {"/usr/bin/mpc", "toggle", NULL, NULL};
+static const char *btn_next[] = {"/usr/bin/mpc", "next", NULL, NULL};
+
+// static const char *btn_prev[] = {"/usr/bin/spt", "playback", "-p", NULL};
+// static const char *btn_pause[] = {"/usr/bin/spt", "pause", "-t", NULL};
+// // static const char *btn_play[] = {"/usr/bin/mpc", "play", NULL, NULL};
+// static const char *btn_toggle[] = {"/usr/bin/spt", "playback", "-t", NULL};
+// static const char *btn_next[] = {"/usr/bin/spt", "playback", "-n", NULL};
 
 
 
