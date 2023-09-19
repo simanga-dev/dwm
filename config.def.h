@@ -13,12 +13,12 @@ static const char col_gray2[]       = "#21262d";
 static const char col_gray3[]       = "#a9b1d6";
 static const char col_gray4[]       = "#c0caf5";
 static const char col_cyan[]        = "#d18616";
-static const unsigned int baralpha = 0xd0;
+static const unsigned int baralpha = 0xa0;
 static const unsigned int borderalpha = OPAQUE;
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray1, col_gray3,  col_cyan  },
+	[SchemeSel]  = { col_gray1, col_cyan,  col_cyan  },
 	[SchemeTitle]  = { col_gray4, col_gray1,  col_gray2  },
 };
 
@@ -94,9 +94,9 @@ static const int lockfullscreen = 0; /* 1 will force focus on the fullscreen win
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
-	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
+	{ "><>",      NULL },    /* no layout function means floating behavior */
+	{ "[]=",      tile },    /* first entry is default */
 	{ "###",      grid },
 	{ "TTT",      bstack },
 	{ "===",      bstackhoriz },
@@ -170,10 +170,10 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Tab,    				view,           			{0} },
 	{ MODKEY,             			    XK_q,      				killclient,     			{0} },
 	{ MODKEY|ShiftMask,             XK_q,          		quit,           			{0} },
-	{ MODKEY,                       XK_t,      				setlayout,      			{.v = &layouts[0]} },
+	{ MODKEY,                       XK_t,      				setlayout,      			{.v = &layouts[2]} },
 	{ MODKEY,                       XK_f,      				setlayout,      			{.v = &layouts[1]} },
   { MODKEY|ShiftMask,             XK_f,          		unfloatvisible, 			{.v = &layouts[5]} },
-	{ MODKEY,                       XK_m,      				setlayout,      			{.v = &layouts[2]} },
+	{ MODKEY,                       XK_m,      				setlayout,      			{.v = &layouts[1]} },
 	{ MODKEY,                       XK_g,          		setlayout,      			{.v = &layouts[3]} },
 	{ MODKEY,                       XK_u,          		setlayout,      			{.v = &layouts[4]} },
 	{ MODKEY|ShiftMask,             XK_u,          		setlayout,      			{.v = &layouts[5]} },

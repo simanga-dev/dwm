@@ -251,6 +251,7 @@ static void sendmon(Client *c, Monitor *m);
 static void setclientstate(Client *c, long state);
 static void setfocus(Client *c);
 static void setfullscreen(Client *c, int fullscreen);
+static void oldsetfullscreen(Client *c, int fullscreen);
 static void setlayout(const Arg *arg);
 static void setmfact(const Arg *arg);
 static void setup(void);
@@ -430,6 +431,7 @@ applyrules(Client *c)
 	if (c->tags == SCRATCHPAD_MASK ){
 		scratchpad_last_showed = c;
 		c -> tags = selmon->tagset[selmon->seltags];
+    resizeclient(c, selmon->wx, selmon->wy, selmon->ww - 2, selmon->wh - 2);
 	}
 
 }
@@ -2104,6 +2106,9 @@ resizeclient(Client *c, int x, int y, int w, int h)
 		c->h = wc.height += c->bw * 2;
 		wc.border_width = 0;
 	}
+  if (c->tags == SCRATCHPAD_MASK)
+		wc.border_width = 0;
+
 	XConfigureWindow(dpy, c->win, CWX|CWY|CWWidth|CWHeight|CWBorderWidth, &wc);
 	configure(c);
 	XSync(dpy, False);
@@ -2248,7 +2253,7 @@ scratchpad_hide()
 	if (selmon -> sel)
 	{
 		selmon -> sel -> tags = SCRATCHPAD_MASK;
-		// selmon -> sel -> isfloating = 1;
+		selmon -> sel -> isfloating = 1;
 		resize(selmon->sel, selmon->wx, selmon->wy,
 				selmon->ww - 2 * selmon->sel->bw,
 				selmon->wh - 2 * selmon->sel->bw, 0);
