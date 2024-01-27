@@ -8,8 +8,8 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "JetBrainsMono:size=12" };
 static const char dmenufont[]       = "JetBrainsMono:size=11";
-static const char col_gray1[]       = "#21262d";
-static const char col_gray2[]       = "#21262d";
+static const char col_gray1[]       = "#1d1c1b";
+static const char col_gray2[]       = "#1d1c1b";
 static const char col_gray3[]       = "#a9b1d6";
 static const char col_gray4[]       = "#c0caf5";
 static const char col_cyan[]        = "#d18616";
@@ -44,39 +44,26 @@ static const Rule rules[] = {
 	 */
 	/* class      						          instance    title       tags mask      iscentered	switchtotag   	isfloating   	issticky   		canfocus    ispermanent   isalwaystop    monitor */
 	{ "Nemo",                           NULL,       NULL,       1 << 2,        0,           1,          	0,         	 	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "Spotify",                        NULL,       NULL,       1 << 1,        0,           1,          	0,         	 	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "spotify",                        NULL,       NULL,       1 << 1,        0,           1,          	0,         	 	0,         		1,        	0,         	  0,         	  	-1 },
 	{ "speedcrunch",         	          NULL,       NULL,            0,        1,           0,          	1,          	1,         		1,        	0,         	  0,         	  	-1 },
 	{ "SpeedCrunch",         	          NULL,       NULL,            0,        1,           0,          	1,          	1,         		1,        	0,         	  0,         	  	-1 },
 	{ "Gimp",                           NULL,       NULL,       1 << 3,        0,           1,          	1,          	0,         		1,        	0,         	  0,         	  	-1 },
 	{ "jetbrains-pycharm",              NULL,       NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
 	{ "Code",                           NULL,       NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "Insomnia",                       NULL,       NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
 	{ "Inkscape",                       NULL,       NULL,       1 << 3,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
 	{ "firefox",                        NULL,       NULL,       1 << 8,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
 	{ "firefox",                        "Toolkit",  NULL,            0,        0,           0,          	1,          	1,         		0,        	1,         	  1,         	  	-1 },
-	{ "brave-browser-nightly",          NULL,       NULL,       1 << 8,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "Brave-browser-nightly",          NULL,       NULL,       1 << 8,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "Microsoft-edge-beta",            NULL,       NULL,       1 << 8,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "microsoft-edge-beta",            NULL,       NULL,       1 << 8,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "Microsoft-edge",                 NULL,       NULL,       1 << 8,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "microsoft-edge",                 NULL,       NULL,       1 << 8,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "Slack",                          NULL,       NULL,       1 << 7,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "notion-app",                     NULL,       NULL,       1 << 7,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "whatsapp-nativefier-d40211",     NULL,       NULL,       1 << 7,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "obs",                            NULL,       NULL,       1 << 7,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "kdenlive",                       NULL,       NULL,       1 << 7,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "discord",                        NULL,       NULL,       1 << 7,        1,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "Slack",                          NULL,       NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "notion-app",                     NULL,       NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "whatsapp-nativefier-d40211",     NULL,       NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "obs",                            NULL,       NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "kdenlive",                       NULL,       NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "discord",                        NULL,       NULL,       1 << 1,        1,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "Mattermost",                        NULL,       NULL,    1 << 1,        1,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
 	{ "Zoom",                           NULL,       NULL,       1 << 7,        0,           0,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "DBeaver",                        NULL,       NULL,       1 << 7,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "Thunderbird",                    NULL,       NULL,       1 << 6,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ NULL,                             "Mail",       NULL,     1 << 6,        1,           1,          	1,          	0,         		1,        	0,         	  1,         	  	-1 },
-	{ "thunderbird",                    "Mail",       NULL,       1 << 6,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "Evolution",                      NULL,       NULL,       1 << 6,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "BlueMail",                       NULL,       NULL,       1 << 6,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "st",                             NULL,       NULL,       1 << 0,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "Thunderbird",                    NULL,       NULL,       1 << 7,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "thunderbird",                    "Mail",       NULL,     1 << 7,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
 	{ "Alacritty",                      NULL,       NULL,       1 << 0,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "Notes",                          NULL,       "Notes",         0,        1,           0,          	1,          	1,         		1,        	0,         	  0,         	  	-1 },
+	{ "Notes",                          NULL,       "Notes",    1 << 8,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
 	{ "NIDE",                           NULL,       NULL,  SCRATCHPAD_MASK,    1,           0,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
 };
 
@@ -94,9 +81,9 @@ static const int lockfullscreen = 0; /* 1 will force focus on the fullscreen win
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[M]",      monocle },
+  { "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
-	{ "[]=",      tile },    /* first entry is default */
+  { "[M]",      monocle },
 	{ "###",      grid },
 	{ "TTT",      bstack },
 	{ "===",      bstackhoriz },
@@ -170,10 +157,10 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Tab,    				view,           			{0} },
 	{ MODKEY,             			    XK_q,      				killclient,     			{0} },
 	{ MODKEY|ShiftMask,             XK_q,          		quit,           			{0} },
-	{ MODKEY,                       XK_t,      				setlayout,      			{.v = &layouts[2]} },
+	{ MODKEY,                       XK_t,      				setlayout,      			{.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      				setlayout,      			{.v = &layouts[1]} },
-  { MODKEY|ShiftMask,             XK_f,          		unfloatvisible, 			{.v = &layouts[5]} },
-	{ MODKEY,                       XK_m,      				setlayout,      			{.v = &layouts[1]} },
+  { MODKEY|ShiftMask,             XK_f,          		unfloatvisible, 			{.v = &layouts[2]} },
+	{ MODKEY,                       XK_m,      				setlayout,      			{.v = &layouts[2]} },
 	{ MODKEY,                       XK_g,          		setlayout,      			{.v = &layouts[3]} },
 	{ MODKEY,                       XK_u,          		setlayout,      			{.v = &layouts[4]} },
 	{ MODKEY|ShiftMask,             XK_u,          		setlayout,      			{.v = &layouts[5]} },
