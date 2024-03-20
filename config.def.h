@@ -42,29 +42,29 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      						          instance    title       tags mask      iscentered	switchtotag   	isfloating   	issticky   		canfocus    ispermanent   isalwaystop    monitor */
-	{ "Nemo",                           NULL,       NULL,       1 << 2,        0,           1,          	0,         	 	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "speedcrunch",         	          NULL,       NULL,            0,        1,           0,          	1,          	1,         		1,        	0,         	  0,         	  	-1 },
-	{ "SpeedCrunch",         	          NULL,       NULL,            0,        1,           0,          	1,          	1,         		1,        	0,         	  0,         	  	-1 },
-	{ "Gimp",                           NULL,       NULL,       1 << 3,        0,           1,          	1,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "jetbrains-pycharm",              NULL,       NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "Code",                           NULL,       NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "Inkscape",                       NULL,       NULL,       1 << 3,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "firefox",                        NULL,       NULL,       1 << 8,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "firefox",                        "Toolkit",  NULL,            0,        0,           0,          	1,          	1,         		0,        	1,         	  1,         	  	-1 },
-	{ "Slack",                          NULL,       NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "notion-app",                     NULL,       NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "whatsapp-nativefier-d40211",     NULL,       NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "obs",                            NULL,       NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "kdenlive",                       NULL,       NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "discord",                        NULL,       NULL,       1 << 1,        1,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "Mattermost",                        NULL,       NULL,    1 << 1,        1,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "Zoom",                           NULL,       NULL,       1 << 7,        0,           0,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "Thunderbird",                    NULL,       NULL,       1 << 7,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "thunderbird",                    "Mail",       NULL,     1 << 7,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "Alacritty",                      NULL,       NULL,       1 << 0,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "Notes",                          NULL,       "Notes",    1 << 8,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "NIDE",                           NULL,       NULL,  SCRATCHPAD_MASK,    1,           0,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	/* class      		instance	title       tags mask      iscentered	switchtotag   	isfloating   	issticky   		canfocus    ispermanent   isalwaystop    monitor */
+	{ "Nemo",		NULL,		NULL,       1 << 2,        0,           1,          	0,         	 	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "speedcrunch",	NULL,		NULL,            0,        1,           0,          	1,          	1,         		1,        	0,         	  0,         	  	-1 },
+	{ "SpeedCrunch",	NULL,		NULL,            0,        1,           0,          	1,          	1,         		1,        	0,         	  0,         	  	-1 },
+	{ "Gimp",		NULL,		NULL,       1 << 3,        0,           1,          	1,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "jetbrains-pycharm",	NULL,		NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	// { "Code",            NULL,		NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "Inkscape",		NULL,		NULL,       1 << 3,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "firefox",		NULL,		NULL,       1 << 8,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "firefox",		"Toolkit",	NULL,            0,        0,           0,          	1,          	1,         		0,        	1,         	  1,         	  	-1 },
+	{ "Slack",		NULL,		NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "notion-app",		NULL,		NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "whatsdesk",		NULL,		NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "obs",		NULL,		NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "kdenlive",		NULL,		NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "discord",		NULL,		NULL,       1 << 1,        1,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "Mattermost",		NULL,		NULL,    1 << 1,        1,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "Zoom",		NULL,		NULL,       1 << 7,        0,           0,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "Thunderbird",	NULL,		NULL,       1 << 7,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "thunderbird",	"Mail",		NULL,     1 << 7,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "Alacritty",		NULL,		NULL,       1 << 0,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "Notes",		NULL,		"Notes",    1 << 8,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "NIDE",		NULL,		NULL,  SCRATCHPAD_MASK,    1,           0,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
 };
 
 /* window swallowing */
@@ -74,7 +74,7 @@ static const char swalsymbol[] = "[</>]";
 
 
 /* layout(s) */
-static const float mfact     = 0.60; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 0; /* 1 will force focus on the fullscreen window */
