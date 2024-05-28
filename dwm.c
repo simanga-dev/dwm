@@ -432,7 +432,7 @@ applyrules(Client *c)
 		scratchpad_last_showed = c;
 		c -> tags = selmon->tagset[selmon->seltags];
 		// resize(c, m->wx, m->wy, m->ww - 2 * c->bw, m->wh - 2 * c->bw, 0);
-    resizeclient(c, selmon->wx, selmon->wy, selmon->ww - 2, selmon->wh - 2);
+		resizeclient(c, selmon->wx, selmon->wy, selmon->ww - 2, selmon->wh - 2);
 	}
 
 }
@@ -1028,6 +1028,15 @@ drawbar(Monitor *m)
 		if (!s && a)
 			s = 1;
 		snprintf(m->ltsymbol, sizeof m->ltsymbol, "[M] [%d/%d]", s, a);
+	}
+
+	if (m->lt[m->sellt]->arrange == tile) {
+		for (c = nexttiled(m->clients), a = 0, s = 0; c; c = nexttiled(c->next), a++)
+			if (c == m->stack)
+				s = a + 1;
+		if (!s && a)
+			s = 1;
+		snprintf(m->ltsymbol, sizeof m->ltsymbol, "[]= [%d/%d]", s, a);
 	}
 
 
