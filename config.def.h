@@ -8,17 +8,17 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "JetBrainsMono:size=12" };
 static const char dmenufont[]       = "JetBrainsMono:size=11";
-static const char col_gray1[]       = "#1d1c1b";
-static const char col_gray2[]       = "#1d1c1b";
+static const char col_gray1[]       = "#21262d";
+static const char col_gray2[]       = "#21262d";
 static const char col_gray3[]       = "#a9b1d6";
 static const char col_gray4[]       = "#c0caf5";
 static const char col_cyan[]        = "#d18616";
-static const unsigned int baralpha = 0xa0;
+static const unsigned int baralpha = 0xd0;
 static const unsigned int borderalpha = OPAQUE;
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray1, col_cyan,  col_cyan  },
+	[SchemeSel]  = { col_cyan, col_gray1,  col_cyan  },
 	[SchemeTitle]  = { col_gray4, col_gray1,  col_gray2  },
 };
 
@@ -42,29 +42,41 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      		instance	title       tags mask      iscentered	switchtotag   	isfloating   	issticky   		canfocus    ispermanent   isalwaystop    monitor */
-	{ "Nemo",		NULL,		NULL,       1 << 2,        0,           1,          	0,         	 	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "speedcrunch",	NULL,		NULL,            0,        1,           0,          	1,          	1,         		1,        	0,         	  0,         	  	-1 },
-	{ "SpeedCrunch",	NULL,		NULL,            0,        1,           0,          	1,          	1,         		1,        	0,         	  0,         	  	-1 },
-	{ "Gimp",		NULL,		NULL,       1 << 3,        0,           1,          	1,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "jetbrains-pycharm",	NULL,		NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	// { "Code",            NULL,		NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "Inkscape",		NULL,		NULL,       1 << 3,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "firefox",		NULL,		NULL,       1 << 8,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "firefox",		"Toolkit",	NULL,            0,        0,           0,          	1,          	1,         		0,        	1,         	  1,         	  	-1 },
-	{ "Slack",		NULL,		NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "notion-app",		NULL,		NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "whatsdesk",		NULL,		NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "obs",		NULL,		NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "kdenlive",		NULL,		NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "discord",		NULL,		NULL,       1 << 1,        1,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "Mattermost",		NULL,		NULL,    1 << 1,        1,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "Zoom",		NULL,		NULL,       1 << 7,        0,           0,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "Thunderbird",	NULL,		NULL,       1 << 7,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "thunderbird",	"Mail",		NULL,     1 << 7,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "Alacritty",		NULL,		NULL,       1 << 0,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "Notes",		NULL,		"Notes",    1 << 8,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "NIDE",		NULL,		NULL,  SCRATCHPAD_MASK,    1,           0,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	/* class      						          instance    title       tags mask      iscentered	switchtotag   	isfloating   	issticky   		canfocus    ispermanent   isalwaystop    monitor */
+	{ "Nemo",                           NULL,       NULL,       1 << 2,        0,           1,          	0,         	 	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "Spotify",                        NULL,       NULL,       1 << 1,        0,           1,          	0,         	 	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "spotify",                        NULL,       NULL,       1 << 1,        0,           1,          	0,         	 	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "speedcrunch",         	          NULL,       NULL,            0,        1,           0,          	1,          	1,         		1,        	0,         	  0,         	  	-1 },
+	{ "SpeedCrunch",         	          NULL,       NULL,            0,        1,           0,          	1,          	1,         		1,        	0,         	  0,         	  	-1 },
+	{ "Gimp",                           NULL,       NULL,       1 << 3,        0,           1,          	1,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "jetbrains-pycharm",              NULL,       NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "Code",                           NULL,       NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "Insomnia",                       NULL,       NULL,       1 << 1,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "Inkscape",                       NULL,       NULL,       1 << 3,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "firefox",                        NULL,       NULL,       1 << 8,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "firefox",                        "Toolkit",  NULL,            0,        0,           0,          	1,          	1,         		0,        	1,         	  1,         	  	-1 },
+	{ "brave-browser-nightly",          NULL,       NULL,       1 << 8,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "Brave-browser-nightly",          NULL,       NULL,       1 << 8,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "Microsoft-edge-beta",            NULL,       NULL,       1 << 8,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "microsoft-edge-beta",            NULL,       NULL,       1 << 8,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "Microsoft-edge",                 NULL,       NULL,       1 << 8,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "microsoft-edge",                 NULL,       NULL,       1 << 8,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "Slack",                          NULL,       NULL,       1 << 7,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "notion-app",                     NULL,       NULL,       1 << 7,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "whatsapp-nativefier-d40211",     NULL,       NULL,       1 << 7,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "obs",                            NULL,       NULL,       1 << 7,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "kdenlive",                       NULL,       NULL,       1 << 7,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "discord",                        NULL,       NULL,       1 << 7,        1,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "Zoom",                           NULL,       NULL,       1 << 7,        0,           0,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "DBeaver",                        NULL,       NULL,       1 << 7,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "Thunderbird",                    NULL,       NULL,       1 << 6,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "thunderbird",                    NULL,       NULL,       1 << 6,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "Evolution",                      NULL,       NULL,       1 << 6,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "BlueMail",                       NULL,       NULL,       1 << 6,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "st",                             NULL,       NULL,       1 << 0,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "Alacritty",                      NULL,       NULL,       1 << 0,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
+	{ "Notes",                          NULL,       "Notes",         0,        1,           0,          	1,          	1,         		1,        	0,         	  0,         	  	-1 },
+	{ "NIDE",                           NULL,       NULL,  SCRATCHPAD_MASK,    1,           0,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
 };
 
 /* window swallowing */
@@ -81,9 +93,9 @@ static const int lockfullscreen = 0; /* 1 will force focus on the fullscreen win
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-  { "[]=",      tile },    /* first entry is default */
+	{ "[M]",      monocle },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
-  { "[M]",      monocle },
+	{ "[]=",      tile },
 	{ "###",      grid },
 	{ "TTT",      bstack },
 	{ "===",      bstackhoriz },
@@ -102,7 +114,8 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "rofi", "-show", "run"  };
+static const char *dmenucmd[] = { "dmenu_run", NULL  };
+static const char *roficmd[] = { "rofi", "-show" , "drun", NULL  };
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *lockcmd[]  = { "slock", NULL };
 
@@ -113,24 +126,17 @@ static const char *mic[] = { "/usr/bin/pactl", "set-source-mute ",   "0", "toggl
 
 static const char *light_up[] = {"/usr/bin/brightnessctl", "set", "+5%", NULL};
 static const char *light_down[] = {"/usr/bin/brightnessctl", "set", "5%-", NULL};
-
-static const char *btn_prev[] = {"/usr/bin/mpc", "prev", NULL, NULL};
-static const char *btn_pause[] = {"/usr/bin/mpc", "pause", NULL, NULL};
+static const char *btn_prev[] = {"/usr/bin/spt", "playback", "-p", NULL};
+static const char *btn_pause[] = {"/usr/bin/spt", "pause", "-t", NULL};
 // static const char *btn_play[] = {"/usr/bin/mpc", "play", NULL, NULL};
-static const char *btn_toggle[] = {"/usr/bin/mpc", "toggle", NULL, NULL};
-static const char *btn_next[] = {"/usr/bin/mpc", "next", NULL, NULL};
-
-// static const char *btn_prev[] = {"/usr/bin/spt", "playback", "-p", NULL};
-// static const char *btn_pause[] = {"/usr/bin/spt", "pause", "-t", NULL};
-// // static const char *btn_play[] = {"/usr/bin/mpc", "play", NULL, NULL};
-// static const char *btn_toggle[] = {"/usr/bin/spt", "playback", "-t", NULL};
-// static const char *btn_next[] = {"/usr/bin/spt", "playback", "-n", NULL};
+static const char *btn_toggle[] = {"/usr/bin/spt", "playback", "-t", NULL};
+static const char *btn_next[] = {"/usr/bin/spt", "playback", "-n", NULL};
 
 
 
 static Key keys[] = {
 	/* modifier                     key        				function        			argument */
-	{ MODKEY,                       XK_p,      				spawn,          			{.v = dmenucmd } },
+	{ MODKEY,                       XK_p,      				spawn,          			{.v = roficmd } },
 	{ MODKEY,             			    XK_Return, 				spawn,          			{.v = termcmd } } ,
 	{ MODKEY|ShiftMask,             XK_l,          		spawn,          			{.v = lockcmd } },
 	{ MODKEY,                       XK_e,      				focusurgent,         	{0} },
@@ -140,9 +146,9 @@ static Key keys[] = {
 	{ MODKEY,                       XK_h,          		shiftview,      			{.i = -1 } },
 	{ MODKEY,                       XK_l,          		shiftview,      			{.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_o,          		killunsel,      			{0} },
-	{ MODKEY,                       XK_backslash, 		scratchpad_show, 			{0} },
-	{ MODKEY|ShiftMask,             XK_backslash, 		scratchpad_hide, 			{0} },
-	{ MODKEY|ShiftMask,             XK_BackSpace,			scratchpad_remove,		{0} },
+	{ MODKEY,                       XK_backslash, 				scratchpad_show, 			{0} },
+	{ MODKEY|ShiftMask,             XK_backslash, 				scratchpad_hide, 			{0} },
+	{ MODKEY|ShiftMask,             XK_BackSpace,				  scratchpad_remove,		{0} },
 	{ MODKEY,                       XK_x,      				swalstopsel,    			{0} },
 	{ MODKEY,             			    XK_s,  					  togglesticky, 				{0} },
 	{ MODKEY,                       XK_z,           	togglecanfocusfloating,    	{0} },
@@ -157,10 +163,10 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Tab,    				view,           			{0} },
 	{ MODKEY,             			    XK_q,      				killclient,     			{0} },
 	{ MODKEY|ShiftMask,             XK_q,          		quit,           			{0} },
-	{ MODKEY,                       XK_t,      				setlayout,      			{.v = &layouts[0]} },
+	{ MODKEY,                       XK_t,      				setlayout,      			{.v = &layouts[2]} },
 	{ MODKEY,                       XK_f,      				setlayout,      			{.v = &layouts[1]} },
-  { MODKEY|ShiftMask,             XK_f,          		unfloatvisible, 			{.v = &layouts[2]} },
-	{ MODKEY,                       XK_m,      				setlayout,      			{.v = &layouts[2]} },
+    { MODKEY|ShiftMask,           XK_f,          		unfloatvisible, 			{.v = &layouts[5]} },
+	{ MODKEY,                       XK_m,      				setlayout,      			{.v = &layouts[0]} },
 	{ MODKEY,                       XK_g,          		setlayout,      			{.v = &layouts[3]} },
 	{ MODKEY,                       XK_u,          		setlayout,      			{.v = &layouts[4]} },
 	{ MODKEY|ShiftMask,             XK_u,          		setlayout,      			{.v = &layouts[5]} },
@@ -171,14 +177,6 @@ static Key keys[] = {
 	{ MODKEY,                       XK_bracketleft, 	focusmon,       			{.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_bracketleft,  	tagmon,         			{.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_bracketleft, 	tagmon,         			{.i = +1 } },
-	{ MODKEY|ControlMask,                     XK_j,          moveresize,           {.v = "0x 25y 0w 0h" } },
-	{ MODKEY|ControlMask,                      XK_k,            moveresize,           {.v = "0x -25y 0w 0h" } },
-	{ MODKEY|ControlMask,                       XK_l,         moveresize,           {.v = "25x 0y 0w 0h" } },
-	{ MODKEY|ControlMask,                       XK_h,          moveresize,           {.v = "-25x 0y 0w 0h" } },
-	{ MODKEY|ControlMask|ShiftMask,             XK_j,          moveresize,           {.v = "0x 0y 0w 25h" } },
-	{ MODKEY|ControlMask|ShiftMask,             XK_k,            moveresize,           {.v = "0x 0y 0w -25h" } },
-	{ MODKEY|ControlMask|ShiftMask,             XK_l,         moveresize,           {.v = "0x 0y 25w 0h" } },
-	{ MODKEY|ControlMask|ShiftMask,             XK_h,          moveresize,           {.v = "0x 0y -25w 0h" } },
 	{ 0,    					XF86XK_AudioLowerVolume,	      spawn,		    		    {.v = downvol } },
 	{ 0,							XF86XK_AudioMute,		            spawn,		    		    {.v = mutevol } },
 	{ 0,							XF86XK_AudioRaiseVolume,	      spawn,		    		    {.v = upvol   } },
