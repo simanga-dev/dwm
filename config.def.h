@@ -75,7 +75,7 @@ static const Rule rules[] = {
 	{ "BlueMail",                       NULL,       NULL,       1 << 6,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
 	{ "st",                             NULL,       NULL,       1 << 0,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
 	{ "Alacritty",                      NULL,       NULL,       1 << 0,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
-	{ "Notes",                          NULL,       "Notes",         0,        1,           0,          	1,          	1,         		1,        	0,         	  0,         	  	-1 },
+	{ "Notes",                          NULL,       "Notes",    1 << 8,        0,           1,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
 	{ "NIDE",                           NULL,       NULL,  SCRATCHPAD_MASK,    1,           0,          	0,          	0,         		1,        	0,         	  0,         	  	-1 },
 };
 
